@@ -48,3 +48,11 @@ export const DETAILS = [
   { name: 'Guest experience', img: 'm10', pos: '50% 35%', z: 1.1, text: 'Every guest welcomed, guided and looked after.' },
   { name: 'Event details', img: 'd-candle', pos: '50% 50%', z: 1, text: 'Signage and small touches people remember for years.' },
 ]
+
+export const ENTRANCE = [
+  { id: 'about-us', label: 'Our story', img: 'm3', text: 'Meet the dreamers' },
+  { id: 'services', label: 'Celebrations', img: 'h2', text: 'Moments made magical' },
+  { id: 'gallery', label: 'Our work', img: 'm11', text: 'Wander through our creations' },
+  { id: 'venues', label: 'Venues', img: 'm12', text: 'Find your perfect setting' },
+  { id: 'contact', label: 'Your beginning', img: 'm4', text: 'Let’s dream together' },
+]

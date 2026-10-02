@@ -1,9 +1,4 @@
-import { MARQUEE } from '../data'
+﻿import { MARQUEE } from '../data'
 export default function Marquee() {
-  const row = [...MARQUEE, ...MARQUEE]
-  return (
-    <div className="marquee"><div>
-      {row.map((t, k) => <span key={k}><span>✦</span>{t}</span>)}
-    </div></div>
-  )
+  return <div className="occasion-strip" aria-label="Celebrations we design">{MARQUEE.map(t => <span key={t}>{t}</span>)}</div>
 }

@@ -1,4 +1,3 @@
-import Cursor from './components/Cursor'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Marquee from './components/Marquee'
@@ -19,7 +18,7 @@ import BeforeAfter from './components/BeforeAfter'
 export default function App() {
   return (
     <>
-      <Cursor /><Navbar /><Hero /><Marquee /><About /><Services /><VenueExplorer />
+      <Navbar /><Hero /><Marquee /><About /><Services /><VenueExplorer />
       <Gallery /><BeforeAfter /><Process /><Moodboards /><FeaturedCelebration /><CoupleStories />
       <Details /><Testimonial /><Cta /><Contact /><Footer />
     </>
