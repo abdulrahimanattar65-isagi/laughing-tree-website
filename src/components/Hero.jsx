@@ -7,6 +7,7 @@ export default function Hero() {
   const n = ENTRANCE.length
   const [active, setActive] = useState(n - 1)
   const [smokeKey, setSmokeKey] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
 
   const goTo = i => {
     if (i === active) return
@@ -16,13 +17,14 @@ export default function Hero() {
 
   // auto-rotate: each step moves the cards right to left
   useEffect(() => {
+    if (isHovered) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const t = setInterval(() => {
       setActive(a => (a + 1) % n)
       setSmokeKey(k => k + 1)
     }, 3000)
     return () => clearInterval(t)
-  }, [n])
+  }, [n, isHovered])
 
   // shortest circular distance from the focused card
   const offsetOf = i => {
@@ -46,7 +48,9 @@ export default function Hero() {
     <div className="celebration-explore">
       <p className="explore-caption">Discover Laughing Tree <span>Choose where your story begins</span></p>
       <div className="experience-stage">
-        <div className="experience-links">{ENTRANCE.map((item, i) => {
+        <div className="experience-links"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}>{ENTRANCE.map((item, i) => {
           const d = offsetOf(i), abs = Math.abs(d)
           return <button type="button" key={item.id}
             className={`experience-card${active === i ? ' is-active' : ''}${abs > 2 ? ' is-hidden' : ''}`}
