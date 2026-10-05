@@ -10,7 +10,7 @@ export default function Details() {
           <ul>{DETAILS.map((d, k) => <li key={d.name}><button className={k === on ? 'on' : ''} aria-pressed={k === on} onClick={() => setOn(k)}>{d.name}</button></li>)}</ul>
         </div>
         <div className="d-stage">
-          {DETAILS.map((d, k) => <figure key={d.name} className={k <= on ? 'in' : ''} style={{ zIndex: k }}><img src={`/images/${d.img}.jpg`} alt={d.name} loading="lazy" style={{ objectPosition: d.pos, '--z': d.z }} /></figure>)}
+          {DETAILS.map((d, k) => <figure key={d.name} className={k <= on ? 'in' : ''} style={{ zIndex: k }}><img src={`/images/${d.img}.png`} alt={d.name} loading="lazy" style={{ objectPosition: d.pos, '--z': d.z }} /></figure>)}
           <figcaption key={on}><b>{DETAILS[on].name}</b><span>{DETAILS[on].text}</span></figcaption>
         </div>
       </div>

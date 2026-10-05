@@ -9,7 +9,7 @@ export default function Services() {
       <div className="svc-row">
         {SERVICES.map((s, k) => (
           <a href="#contact" key={s.title} className={`svc${on === k ? ' on' : ''}`} onMouseEnter={() => setOn(k)} onFocus={() => setOn(k)} data-cursor="Enquire">
-            <img src={`/images/${s.img}.jpg`} alt={s.title} loading="lazy" />
+            <img src={`/images/${s.img}.png`} alt={s.title} loading="lazy" />
             <span className="v">{s.title}</span>
             <div className="svc-in"><h3>{s.title}</h3><p>{s.text}</p></div>
           </a>
