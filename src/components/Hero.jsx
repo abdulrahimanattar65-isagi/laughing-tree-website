@@ -19,9 +19,29 @@ export default function Hero() {
 
   useEffect(() => {
     if (paused || hovered || focused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const timer = window.setInterval(() => setPosition(value => value + 1), 3000)
-    return () => window.clearInterval(timer)
-  }, [count, paused, hovered, focused, position])
+
+    let timer
+    const stop = () => window.clearTimeout(timer)
+    const restart = () => {
+      stop()
+      if (document.hidden) return
+      // Always wait a fresh three seconds; never catch up on hidden-tab time.
+      timer = window.setTimeout(() => {
+        if (!document.hidden) setPosition(value => value + 1)
+      }, 3000)
+    }
+
+    restart()
+    document.addEventListener('visibilitychange', restart)
+    window.addEventListener('pagehide', stop)
+    window.addEventListener('pageshow', restart)
+    return () => {
+      stop()
+      document.removeEventListener('visibilitychange', restart)
+      window.removeEventListener('pagehide', stop)
+      window.removeEventListener('pageshow', restart)
+    }
+  }, [paused, hovered, focused, position])
 
   const offsetOf = index => {
     let offset = (index - active + count) % count
@@ -30,7 +50,7 @@ export default function Hero() {
   }
   const current = ENTRANCE[active]
 
-  return <header className="gallery-hero" id="top" aria-label="Discover Laughing Tree">
+  return <header className="gallery-hero" data-light id="top" aria-label="Discover Laughing Tree">
     <div className="gallery-hero-intro">
       <span>Thoughtfully designed. Beautifully celebrated.</span>
       <a href="#contact">Begin your story <span aria-hidden="true">↗</span></a>
