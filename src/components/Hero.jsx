@@ -1,69 +1,91 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ENTRANCE } from '../data'
-
-const experiences = [['about-us','Our story'],['services','Celebrations'],['venues','Venues'],['gallery','Our work'],['before-after','Transformations'],['process','Our process'],['moodboards','Moodboards'],['featured','Featured celebration'],['stories','Couple stories'],['details','Design details'],['testimonial','Kind words'],['contact','Consultation']]
+import './Hero.css'
 
 export default function Hero() {
-  const n = ENTRANCE.length
-  const [active, setActive] = useState(n - 1)
-  const [smokeKey, setSmokeKey] = useState(0)
-  const [isHovered, setIsHovered] = useState(false)
-
-  const goTo = i => {
-    if (i === active) return
-    setActive(i)
-    setSmokeKey(k => k + 1) // replays the smoke
+  const [position, setPosition] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const touchStart = useRef(null)
+  const count = ENTRANCE.length
+  const active = ((position % count) + count) % count
+  const move = direction => setPosition(value => value + direction)
+  const goTo = index => {
+    let distance = (index - active + count) % count
+    if (distance > count / 2) distance -= count
+    setPosition(value => value + distance)
   }
 
-  // auto-rotate: each step moves the cards right to left
   useEffect(() => {
-    if (isHovered) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const t = setInterval(() => {
-      setActive(a => (a + 1) % n)
-      setSmokeKey(k => k + 1)
-    }, 3000)
-    return () => clearInterval(t)
-  }, [n, isHovered])
+    if (paused || hovered || focused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const timer = window.setInterval(() => setPosition(value => value + 1), 3000)
+    return () => window.clearInterval(timer)
+  }, [count, paused, hovered, focused, position])
 
-  // shortest circular distance from the focused card
-  const offsetOf = i => {
-    let d = (i - active + n) % n
-    if (d > n / 2) d -= n
-    return d
+  const offsetOf = index => {
+    let offset = (index - active + count) % count
+    if (offset > count / 2) offset -= count
+    return offset
   }
+  const current = ENTRANCE[active]
 
-  return <header className="celebration-hero" id="top">
-    <div className="celebration-backdrops" aria-hidden="true">{ENTRANCE.map((item, i) => <img key={item.id} src={`/images/${item.img}.png`} alt="" className={active === i ? 'is-visible' : ''} fetchPriority={i === n - 1 ? 'high' : 'auto'}/>)}</div>
-
-    {smokeKey > 0 && <div className="celebration-smoke" key={smokeKey} aria-hidden="true"><i/><i/><i/><i/><i/></div>}
-
-    <div className="celebration-content">
-      <span className="eyebrow">Weddings · Celebrations · Beautiful details</span>
-      <h1>Your moments.<br/><em>Beautifully imagined.</em></h1>
-      <p>Thoughtful design, heartfelt celebrations, and memories that feel like you.</p>
-      <a className="celebration-cta" href="#contact">Plan your celebration <span aria-hidden="true">↗</span></a>
+  return <header className="gallery-hero" id="top" aria-label="Discover Laughing Tree">
+    <div className="gallery-hero-intro">
+      <span>Thoughtfully designed. Beautifully celebrated.</span>
+      <a href="#contact">Begin your story <span aria-hidden="true">↗</span></a>
     </div>
-
-    <div className="celebration-explore">
-      <p className="explore-caption">Discover Laughing Tree <span>Choose where your story begins</span></p>
-      <div className="experience-stage">
-        <div className="experience-links"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}>{ENTRANCE.map((item, i) => {
-          const d = offsetOf(i), abs = Math.abs(d)
-          return <button type="button" key={item.id}
-            className={`experience-card${active === i ? ' is-active' : ''}${abs > 2 ? ' is-hidden' : ''}`}
-            style={{ '--offset': d, '--abs': abs, zIndex: 10 - abs }}
-            aria-label={`Preview ${item.label.toLowerCase()}`} aria-pressed={active === i}
-            tabIndex={abs > 2 ? -1 : 0}
-            onClick={() => goTo(i)}>
-            <span className="experience-photo"><img className="experience-image" src={`/images/${item.img}.png`} alt="" loading="lazy"/></span>
+    <div className="gallery-hero-stage" role="region" aria-roledescription="carousel" aria-label="Celebration experiences"
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false) }}
+      onKeyDown={event => {
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+          event.preventDefault()
+          move(event.key === 'ArrowRight' ? 1 : -1)
+        }
+      }}
+      onTouchStart={event => { touchStart.current = event.touches[0].clientX }}
+      onTouchEnd={event => {
+        if (touchStart.current === null) return
+        const distance = event.changedTouches[0].clientX - touchStart.current
+        if (Math.abs(distance) > 45) move(distance < 0 ? 1 : -1)
+        touchStart.current = null
+      }}>
+      <div className="gallery-hero-track">
+        {ENTRANCE.map((item, index) => {
+          const offset = offsetOf(index)
+          return <button key={item.id} type="button"
+            className={'gallery-hero-card' + (index === active ? ' is-current' : '')}
+            style={{ '--angle': ((index - position) * 360 / count) + 'deg', '--distance': Math.abs(offset), '--card-scale': index === active ? 1.12 : 0.5 }}
+            onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+            onClick={() => goTo(index)} aria-label={'Preview ' + item.label} aria-pressed={index === active}>
+            <img src={'/images/' + item.img + '.png'} alt={item.text} fetchPriority={index === 0 ? 'high' : 'auto'} draggable="false" />
+            <span className="gallery-card-index" aria-hidden="true">0{index + 1}</span>
           </button>
-        })}</div>
+        })}
       </div>
-      <div className="experience-actions"><a className="experience-visit" href={`#${ENTRANCE[active].id}`}>Explore {ENTRANCE[active].label.toLowerCase()} <span aria-hidden="true">↗</span></a></div>
-      <details className="experience-directory"><summary>All experiences <span aria-hidden="true">+</span></summary><div>{experiences.map(([id,label]) => <a href={`#${id}`} key={id} onClick={e => e.currentTarget.closest('details').removeAttribute('open')}>{label} <span aria-hidden="true">↗</span></a>)}</div></details>
+      <h1 className="gallery-hero-title" aria-label="Laughing Tree — beautifully imagined celebrations">
+        <span key={current.id} aria-hidden="true">{current.label}</span>
+      </h1>
+      <span className="gallery-hero-side" aria-hidden="true">Weddings & celebrations · Est. with love</span>
+    </div>
+    <div className="gallery-hero-footer">
+      <div className="gallery-hero-description"><span className="gallery-hero-kicker">Your moments. Beautifully imagined.</span><p>{current.text}</p></div>
+      <div className="gallery-hero-selector" aria-label="Choose an experience">
+        {ENTRANCE.map((item, index) => <button type="button" key={item.id} className={index === active ? 'is-current' : ''}
+          aria-pressed={index === active} onClick={() => goTo(index)}>{item.label}</button>)}
+      </div>
+      <a className="gallery-hero-explore" href={'#' + current.id}>Explore {current.label.toLowerCase()} <span aria-hidden="true">↗</span></a>
+    </div>
+    <div className="gallery-hero-bottom">
+      <a href="#about-us">Scroll to discover <span aria-hidden="true">↓</span></a>
+      <div className="gallery-hero-controls">
+        <button type="button" onClick={() => move(-1)} aria-label="Previous experience">←</button>
+        <span className="gallery-hero-count">0{active + 1} <i>/ 0{count}</i></span>
+        <button type="button" onClick={() => move(1)} aria-label="Next experience">→</button>
+        <button type="button" className="gallery-hero-pause" onClick={() => setPaused(value => !value)}
+          aria-label={paused ? 'Play slideshow' : 'Pause slideshow'} aria-pressed={paused}>{paused ? 'Play' : 'Pause'}</button>
+      </div>
     </div>
   </header>
 }

@@ -1,0 +1,5 @@
+/* Keep the brand centered independently of the navigation labels. */
+nav.centered-nav{flex-direction:column;justify-content:center;align-items:center;gap:2px;padding:8px 5vw 12px}
+nav.centered-nav .logo{flex:none;margin:0 auto}
+nav.centered-nav .nav-links{justify-content:center;flex-wrap:wrap;gap:clamp(16px,3vw,44px)}
+@media(max-width:560px){nav.centered-nav{gap:4px;padding:8px 5vw 10px}nav.centered-nav .nav-links{gap:8px 13px}}

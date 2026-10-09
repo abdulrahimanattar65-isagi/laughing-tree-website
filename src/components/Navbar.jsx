@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NAV } from '../data'
 import Logo from './Logo'
+import './Navbar.css'
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [light, setLight] = useState(false)
@@ -16,7 +17,7 @@ export default function Navbar() {
     return () => removeEventListener('scroll', update)
   }, [])
   return (
-    <nav className={`${scrolled ? 'scrolled' : ''}${light ? ' nav-light' : ''}`}>
+    <nav className={`centered-nav${scrolled ? ' scrolled' : ''}${light ? ' nav-light' : ''}`}>
       <a href="#top" className="logo" aria-label="Laughing Tree home"><Logo /></a>
       <ul className="nav-links">{NAV.map(([id, label]) => <li key={id}><a href={`#${id}`}>{label}</a></li>)}</ul>
     </nav>
