@@ -15,7 +15,7 @@ export const NAV = [
   ['gallery', 'Our work'], ['contact', 'Consultation'],
 ]
 export const HERO = ['lt2', 'lt3', 'lt9', 'lt11']
-export const MARQUEE = ['Weddings', 'Haldi & Mehndi', 'Birthdays', 'Anniversaries', 'Corporate Events', 'Home Functions', 'Floral Decor']
+export const MARQUEE = ['Weddings', 'Haldi & Mehndi', 'Anniversaries', 'Corporate Events', 'Home Functions', 'Floral Decor']
 export const SERVICES = [
   { img: 'lt9', title: 'Weddings', text: 'Mandaps, stages, entries and complete wedding design.' },
   { img: 'lt1', title: 'Haldi & Mehndi', text: 'Bright drapes, marigolds and cozy pre-wedding corners.' },

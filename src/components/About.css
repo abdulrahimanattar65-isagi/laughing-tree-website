@@ -1,0 +1,38 @@
+/* Keep both complete lines' space reserved while the visible text types out. */
+.statement.about-typing{display:grid;text-wrap:wrap}
+.statement.about-typing>span{display:block;grid-area:1 / 1;min-width:0}
+.about-heading-space{visibility:hidden;pointer-events:none;user-select:none}
+.stats .stat-count{display:grid;font-variant-numeric:tabular-nums}
+.stat-count>span{grid-area:1 / 1}
+.stat-count-space{visibility:hidden;user-select:none}
+
+/* Tint the supplied transparent tree to a warm wood shade beside the photos. */
+.about .ab-left{position:relative;isolation:isolate}
+.about .ab-left::before{
+  content:'';position:absolute;z-index:-1;top:8%;right:-18%;width:90%;aspect-ratio:1;
+  background:#c2a581;opacity:.48;pointer-events:none;
+  -webkit-mask:url('/images/about-celebration-tree.png') center / 135% no-repeat;
+  mask:url('/images/about-celebration-tree.png') center / 135% no-repeat;
+}
+@media(max-width:900px){.about .ab-left::before{right:-5%;width:78%;top:10%;opacity:.42}}
+@media(max-width:560px){.about .ab-left::before{right:-6%;width:85%;top:14%}}
+
+/* Reveal the photographs and copy in sequence as their columns enter view. */
+.about .ab-left.rv.in,.about .ab-copy.rv.in{animation:none;clip-path:none}
+.about .ab-left .ab-img,.about .ab-copy>p{opacity:0}
+.about .ab-left.in .ab-img{animation:about-slide-up .95s var(--out) both}
+.about .ab-left.in .ab-img.b{animation-delay:240ms}
+.about .ab-copy.in>p{animation:about-slide-up .85s var(--out) both;animation-delay:380ms}
+.about .ab-copy.in>p:nth-of-type(2){animation-delay:560ms}
+.about .ab-copy:focus-within>p{animation:none;opacity:1}
+@keyframes about-slide-up{
+  from{opacity:0;transform:translateY(52px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:900px){
+  .about .ab-copy.in>p{animation-delay:0ms}
+  .about .ab-copy.in>p:nth-of-type(2){animation-delay:180ms}
+}
+@media(prefers-reduced-motion:reduce){
+  .about .ab-left .ab-img,.about .ab-copy>p{opacity:1;transform:none;animation:none}
+}
