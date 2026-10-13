@@ -6,9 +6,10 @@ export const BEFORE_AFTER = Array.from({ length: 5 }, (_, i) => ({
 }))
 
 export const CONTACT = {
-  phone: '+91 00000 00000',
-  email: 'hello@laughingtree.in',
-  social: 'Instagram · Facebook · WhatsApp',
+  phone: '+91 9986342671',
+  email: 'contact@laughingtree.com',
+  address: 'Vidyanagar, Hubli',
+  instagram: 'https://www.instagram.com/laughingtree.in/',
 }
 export const NAV = [
   ['about-us', 'Our story'], ['services', 'Celebrations'], ['venues', 'Venues'],

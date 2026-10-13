@@ -80,7 +80,7 @@ nav.scrolled .nav-links a{text-shadow:none}
 .ab-img{overflow:hidden;background:#d8cfbd}
 .ab-img img{width:100%;height:118%;object-fit:cover;transform:translateY(calc((var(--p,0) - .5)*-9%))}
 .ab-img.a{width:78%;aspect-ratio:3/4.1}
-.ab-img.b{width:48%;aspect-ratio:1/1.2;margin:-12vw 0 0 auto;position:relative;z-index:2;box-shadow:0 0 0 .8vw var(--ivory)}
+.ab-img.b{width:48%;aspect-ratio:1/1.2;margin:-12vw 0 0 auto;position:relative;z-index:2}
 .ab-copy{padding-top:12vw;max-width:34rem}
 .ab-copy p{font:400 1.2rem/1.75 var(--serif);margin-bottom:1.4rem;color:#2a2620}
 .stats{display:flex;gap:3vw;margin-top:4vw;padding-top:2vw;border-top:1px solid rgba(10,9,8,.25)}
@@ -433,3 +433,7 @@ nav .logo{animation:logo-entrance 1.1s cubic-bezier(.2,.7,.3,1) both}
 .foot-row{font-size:15px}
 section[id]{scroll-margin-top:190px}
 @media(max-width:760px){section[id]{scroll-margin-top:165px}.occasion-strip{font-size:14px}.eyebrow{font-size:13px}.stats small{font-size:14px}}
+
+.footer-contact{display:flex;flex-wrap:wrap;gap:12px 32px;margin-bottom:28px;font-style:normal;color:var(--ivory);font-size:14px}.footer-contact a:hover{text-decoration:underline;text-underline-offset:4px}@media(max-width:560px){.footer-contact{flex-direction:column;gap:12px}}
+
+.gallery-hero .gallery-hero-title{text-align:center}

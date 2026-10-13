@@ -46,10 +46,6 @@ export default function Details() {
         <div className="d-list">
           <h2 id="details-heading">Little details.<br />Lasting memories.</h2>
           <ul>{DETAILS.map((d, k) => <li key={d.name}><button className={k === on ? 'on' : ''} aria-pressed={k === on} aria-controls="details-preview" onClick={() => select(k)}>{d.name}</button></li>)}</ul>
-          <div className="details-playback">
-            <span>{String(on + 1).padStart(2, '0')} / {String(DETAILS.length).padStart(2, '0')}</span>
-            <button type="button" className="details-toggle" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Play details slideshow' : 'Pause details slideshow'}>{paused ? 'Play slideshow' : 'Pause slideshow'} <span aria-hidden="true">{paused ? '▶' : 'Ⅱ'}</span></button>
-          </div>
         </div>
         <figure className="d-stage" id="details-preview" aria-live={paused ? 'polite' : 'off'}>
           {DETAILS.map((d, k) => <div key={d.name} className={'detail-photo' + (k === on ? ' is-active' : '')} aria-hidden={k !== on}><img src={`/images/${d.img}.png`} alt={d.name} loading="lazy" style={{ objectPosition: d.pos, '--z': d.z }} /></div>)}

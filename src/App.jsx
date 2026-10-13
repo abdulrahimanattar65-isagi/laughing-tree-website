@@ -11,7 +11,6 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import VenueExplorer from './components/VenueExplorer'
 import Moodboards from './components/Moodboards'
-import FeaturedCelebration from './components/FeaturedCelebration'
 import CoupleStories from './components/CoupleStories'
 import Testimonial from './components/Testimonial'
 import BeforeAfter from './components/BeforeAfter'
@@ -19,7 +18,7 @@ export default function App() {
   return (
     <>
       <Navbar /><Hero /><Marquee /><About /><Services /><VenueExplorer />
-      <Gallery /><BeforeAfter /><Process /><Moodboards /><FeaturedCelebration /><CoupleStories />
+      <Gallery /><BeforeAfter /><Process /><Moodboards /><CoupleStories />
       <Details /><Testimonial /><Cta /><Contact /><Footer />
     </>
   )

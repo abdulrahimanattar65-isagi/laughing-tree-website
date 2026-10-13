@@ -15,9 +15,10 @@ export default function Contact() {
         <Reveal className="info">
           <span className="eyebrow">Private consultation</span><h2>Begin<br />beautifully.</h2>
           <p>Share your date, your people and the feeling you want to create. We’ll make time to listen.</p>
-          <p><b>Phone</b>{CONTACT.phone}</p>
-          <p><b>Email</b>{CONTACT.email}</p>
-          <p><b>Follow</b>{CONTACT.social}</p>
+          <p><b>Phone</b><a href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}>{CONTACT.phone}</a></p>
+          <p><b>Email</b><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p>
+          <p><b>Address</b>{CONTACT.address}</p>
+          <p><b>Follow</b><a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer">Instagram · @laughingtree.in</a></p>
         </Reveal>
         <Reveal as="form" onSubmit={submit}>
           <div className="two"><input placeholder="Your name" required value={f.name} onChange={set('name')} /><input placeholder="Phone number" required value={f.phone} onChange={set('phone')} /></div>

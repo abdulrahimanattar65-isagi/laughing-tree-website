@@ -19,10 +19,7 @@
 .details .d-list li>button::before{content:'';position:absolute;left:0;top:50%;width:5px;height:5px;border-radius:50%;background:var(--gold2);opacity:0;transform:scale(0);transition:opacity .4s,transform .4s}
 .details .d-list li>button.on{padding-left:30px;color:var(--gold2)}
 .details .d-list li>button.on::before{opacity:1;transform:scale(1)}
-.details-playback{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:380px;margin-top:24px;padding-top:16px;border-top:1px solid #c9ad7433;color:var(--gold2)}
-.details-playback>span{font-size:12px;letter-spacing:.12em;font-variant-numeric:tabular-nums}
-.details .d-list .details-toggle{display:inline-flex;align-items:center;gap:12px;min-height:44px;font:400 13px/1.5 var(--sans);letter-spacing:.02em;color:var(--ivory);padding:6px 0}
 .details .d-stage>.details-caption{animation:details-caption-in .7s var(--out) both}
 @keyframes details-caption-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@media(max-width:900px){.details-playback{max-width:none}.details .d-list li>button{padding-left:12px}.details .d-list li>button.on{padding-left:18px}}
+@media(max-width:900px){.details .d-list li>button{padding-left:12px}.details .d-list li>button.on{padding-left:18px}}
 @media(prefers-reduced-motion:reduce){.detail-photo,.details .detail-photo img,.details .d-list li>button,.details .d-list li>button::before{transition:none}.details .d-stage>.details-caption{animation:none}}

@@ -9,6 +9,6 @@ const boards = [
 export default function Moodboards() {
   return <section className="moodboards" id="moodboards">
     <Reveal className="editorial-head"><span className="eyebrow">A first glimpse of the feeling</span><h2>Set the <em>mood.</em></h2><p>Every celebration begins with a point of view. Explore a few palettes to start imagining yours.</p></Reveal>
-    <div className="mood-grid">{boards.map(b => <Reveal className="mood-card" key={b.number}><div className="mood-image"><img src={`/images/${b.img}.png`} alt="" loading="lazy" /><span>{b.number}</span></div><h3>{b.title}</h3><p>{b.palette}</p></Reveal>)}</div>
+    <div className="mood-grid">{boards.map(b => <Reveal className="mood-card" key={b.img}><div className="mood-image"><img src={`/images/${b.img}.png`} alt="" loading="lazy" /></div><h3>{b.title}</h3><p>{b.palette}</p></Reveal>)}</div>
   </section>
 }

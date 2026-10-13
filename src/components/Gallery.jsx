@@ -45,7 +45,7 @@ export default function Gallery() {
         </Reveal>
         <Reveal className="gallery-album">
           <div className="album-backdrop" style={{ backgroundImage: `url(/images/${GALLERY[albumIndex][0]}.png)` }} aria-hidden="true" />
-          <div className="album-label"><span aria-hidden="true">✧</span> The celebration album <span>{GALLERY.length} moments</span></div>
+          <div className="album-label"><span aria-hidden="true">✧</span> The celebration album</div>
           <div className="album-stage" style={{ aspectRatio: imageRatios[GALLERY[albumIndex][0]] || 1672 / 941 }} role="region" aria-roledescription="carousel" aria-label="Celebration album" tabIndex={0}
             onKeyDown={event => {
               if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
@@ -83,14 +83,17 @@ export default function Gallery() {
             <button className="album-stage-arrow album-stage-arrow--next" type="button" onClick={() => turnPage(1)} aria-label="Next album photo">›</button>
           </div>
           <div className="album-feature-copy" aria-hidden="true" key={albumIndex}>
-            <span>Laughing Tree · Celebrations</span>
+            
             <h3>{GALLERY[albumIndex][1]}</h3>
             <i />
-            <p>A little magic. A lifetime of memories.</p>
+            
           </div>
           <div className="album-controls">
-            <p aria-live={isPlaying ? 'off' : 'polite'} aria-atomic="true"><b>{String(albumIndex + 1).padStart(2, '0')}</b><span> / {String(GALLERY.length).padStart(2, '0')}</span></p>
-            <button type="button" className="album-playback" onClick={() => setIsPlaying(playing => !playing)} aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}>{isPlaying ? 'Pause slideshow' : 'Play slideshow'}</button>
+            <button type="button" className="album-playback" onClick={() => setIsPlaying(playing => !playing)} aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                {isPlaying ? <path d="M6 4h4v16H6zm8 0h4v16h-4z" /> : <path d="M7 4v16l14-8z" />}
+              </svg>
+            </button>
           </div>
           <div className="album-dots" role="group" aria-label="Choose album photo">{GALLERY.map(([path, alt], index) => <button key={path} type="button" className={index === albumIndex ? 'is-current' : ''} onClick={() => setAlbumIndex(index)} aria-label={`Show photo ${index + 1}: ${alt}`} aria-pressed={index === albumIndex}><span /></button>)}</div>
         </Reveal>
@@ -105,7 +108,6 @@ export default function Gallery() {
         }}>
         {selected && <>
           <div className="gallery-lightbox-toolbar">
-            <span aria-live="polite">{String(open + 1).padStart(2, '0')} / {String(GALLERY.length).padStart(2, '0')}</span>
             <button autoFocus onClick={() => setOpen(null)} aria-label="Close photo viewer">Close <span aria-hidden="true">×</span></button>
           </div>
           <figure className="gallery-lightbox-photo">
