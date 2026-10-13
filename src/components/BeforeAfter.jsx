@@ -9,8 +9,6 @@ function Comparison({ pair }) {
       <div className="comparison" style={{ '--split': `${position}%` }}>
         <img src={pair.after} alt={`Celebration space ${pair.id} after styling`} loading="lazy" draggable="false" />
         <img className="comparison-before" src={pair.before} alt={`Celebration space ${pair.id} before styling`} loading="lazy" draggable="false" />
-        <span className="comparison-label before-label">Before</span>
-        <span className="comparison-label after-label">After</span>
         <div className="comparison-divider" aria-hidden="true"><span>↔</span></div>
         <input
           className="comparison-slider"
