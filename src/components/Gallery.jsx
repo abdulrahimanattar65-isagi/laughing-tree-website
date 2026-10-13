@@ -83,10 +83,8 @@ export default function Gallery() {
             <button className="album-stage-arrow album-stage-arrow--next" type="button" onClick={() => turnPage(1)} aria-label="Next album photo">›</button>
           </div>
           <div className="album-feature-copy" aria-hidden="true" key={albumIndex}>
-            
             <h3>{GALLERY[albumIndex][1]}</h3>
             <i />
-            
           </div>
           <div className="album-controls">
             <button type="button" className="album-playback" onClick={() => setIsPlaying(playing => !playing)} aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}>
