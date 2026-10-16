@@ -14,12 +14,14 @@ import Moodboards from './components/Moodboards'
 import CoupleStories from './components/CoupleStories'
 import Testimonial from './components/Testimonial'
 import BeforeAfter from './components/BeforeAfter'
+import ScrollMotion from './components/ScrollMotion'
+import WhatsAppFloat from './components/WhatsAppFloat'
 export default function App() {
   return (
     <>
       <Navbar /><Hero /><Marquee /><About /><Services /><VenueExplorer />
       <Gallery /><BeforeAfter /><Process /><Moodboards /><CoupleStories />
-      <Details /><Testimonial /><Cta /><Contact /><Footer />
+      <Details /><Testimonial /><Cta /><Contact /><Footer /><ScrollMotion /><WhatsAppFloat />
     </>
   )
 }

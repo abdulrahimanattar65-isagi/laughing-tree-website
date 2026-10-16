@@ -16,10 +16,11 @@ export const NAV = [
   ['gallery', 'Our work'], ['contact', 'Consultation'],
 ]
 export const HERO = ['lt2', 'lt3', 'lt9', 'lt11']
-export const MARQUEE = ['Weddings', 'Haldi & Mehndi', 'Anniversaries', 'Corporate Events', 'Home Functions', 'Floral Decor']
+export const MARQUEE = ['Weddings', 'Haldi & Mehndi', 'Holi Celebrations', 'Anniversaries', 'Corporate Events', 'Home Functions', 'Floral Decor']
 export const SERVICES = [
   { img: 'lt9', title: 'Weddings', text: 'Mandaps, stages, entries and complete wedding design.' },
-  { img: 'lt1', title: 'Haldi & Mehndi', text: 'Bright drapes, marigolds and cozy pre-wedding corners.' },
+  { img: 'haldi-celebration', title: 'Haldi & Mehndi', text: 'Bright drapes, marigolds and cozy pre-wedding corners.' },
+  { img: 'lt1', title: 'Holi Celebrations', text: 'Vibrant colours, festive settings and joyful gatherings, thoughtfully planned.' },
   { img: 'lt4', title: 'Anniversaries', text: 'Intimate, elegant setups for milestones worth marking.' },
   { img: 'lt8', title: 'Corporate Events', text: 'Conferences, galas and launches, run with precision.' },
   { img: 'lt5', title: 'Home Functions', text: 'Griha pravesh, festivals and family gatherings styled at home.' },
@@ -42,7 +43,7 @@ export const STEPS = [
   ['Create', 'Our crew builds, styles and lights every detail.'],
   ['Celebrate', 'We manage the day so you just enjoy it.'],
 ]
-export const EVENT_TYPES = ['Wedding', 'Haldi / Mehndi', 'Birthday', 'Anniversary', 'Corporate Event', 'Home Function']
+export const EVENT_TYPES = ['Wedding', 'Haldi / Mehndi', 'Holi Celebrations', 'Anniversary', 'Corporate Event', 'Home Function']
 export const DETAILS = [
   { name: 'Decor', img: 'lt9', pos: '50% 25%', z: 1.3, text: 'Drapes, garlands and backdrops designed around your story.' },
   { name: 'Lighting', img: 'lt8', pos: '50% 50%', z: 1, text: 'Chandeliers and candlelight that make a room glow.' },

@@ -29,3 +29,19 @@ nav.centered-nav.is-compact .nav-pill{top:14px;left:95%;translate:-100% 0;width:
   nav.centered-nav .nav-links a:focus-visible{outline-offset:-2px}
 }
 @media(prefers-reduced-motion:reduce){.nav-toggle span{transition:none}}
+
+/* Transparent navigation over the cinematic opening scene. */
+@media(min-width:761px){
+  nav.centered-nav.nav-light{height:108px;background:transparent;box-shadow:none;border-bottom:1px solid #fff8ef30;color:#fff8ef}
+  nav.centered-nav.nav-light .logo{left:7vw;top:18px;translate:none;color:#fff8ef}
+  nav.centered-nav .brand-mark{width:180px}
+  nav.centered-nav .nav-pill{left:auto;right:7vw;top:31px;translate:none;border:0;border-radius:0;padding:0;overflow:visible;max-width:calc(86vw - 210px)}
+  nav.centered-nav .nav-links{gap:clamp(18px,2.8vw,44px)}
+  nav.centered-nav.nav-light .nav-links a{font-size:13px;font-weight:400;color:#fff8ef}
+  nav.centered-nav.nav-light .nav-links a:hover{color:#e8d6a8}
+  nav.centered-nav.is-compact{height:86px;background:#fffaf5;box-shadow:0 3px 18px #3028200d;border-color:#80623420}
+  nav.centered-nav.nav-light.is-compact .logo{left:5vw;top:14px;translate:none;color:#42392f}
+  nav.centered-nav.is-compact .nav-pill{left:auto;right:5vw;top:23px;translate:none;max-width:calc(90vw - 190px)}
+  nav.centered-nav.nav-light.is-compact .nav-links a{color:#42392f}
+}
+@media(min-width:761px) and (max-width:1000px){nav.centered-nav .logo{left:5vw}.centered-nav .brand-mark{width:150px}nav.centered-nav .nav-pill{right:5vw}nav.centered-nav .nav-links{gap:18px}nav.centered-nav .nav-links a{font-size:12px}}

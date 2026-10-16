@@ -1,0 +1,18 @@
+html .scroll-motion[data-scroll-reveal]{opacity:0;animation:none;clip-path:none}
+html .scroll-motion[data-scroll-reveal].is-scroll-visible{animation:page-scroll-entrance 1.15s var(--out) var(--entrance-delay,0ms) both}
+html .scroll-motion[data-scroll-reveal]:focus-within{opacity:1;animation:none;transform:none}
+[data-scroll-media]{translate:0 var(--media-shift,0px);scale:1.08}
+@keyframes page-scroll-entrance{
+  from{opacity:0;transform:translate3d(var(--entrance-x,0px),32px,0)}
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+@media(max-width:760px){
+  @keyframes page-scroll-entrance{
+    from{opacity:0;transform:translate3d(clamp(-48px,var(--entrance-x,0px),48px),20px,0)}
+    to{opacity:1;transform:translate3d(0,0,0)}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html .scroll-motion[data-scroll-reveal],html .scroll-motion[data-scroll-reveal].is-scroll-visible{opacity:1;animation:none;transform:none}
+  [data-scroll-media]{translate:none;scale:none}
+}

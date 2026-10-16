@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 // Reveals content as it enters the viewport.
-export default function Reveal({ as: Tag = 'div', className = '', children, ...rest }) {
+export default function Reveal({ as: Tag = 'div', className = '', children, rootMargin = '0px 0px 80px 0px', threshold = 0, ...rest }) {
   const ref = useRef(null)
   useEffect(() => {
     const el = ref.current
@@ -17,9 +17,9 @@ export default function Reveal({ as: Tag = 'div', className = '', children, ...r
         el.classList.add('in')
         io.unobserve(el)
       }
-    }, { threshold: 0, rootMargin: '0px 0px 80px 0px' })
+    }, { threshold, rootMargin })
     io.observe(el)
     return () => io.disconnect()
-  }, [])
+  }, [rootMargin, threshold])
   return <Tag ref={ref} className={`rv ${className}`} {...rest}>{children}</Tag>
 }

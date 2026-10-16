@@ -1,0 +1,29 @@
+﻿.moodboards.mood-ribbon-section{padding:clamp(48px,6vw,88px) 0 8px;background:#ece5d7;overflow:hidden}
+.moodboards.mood-ribbon-section .editorial-head{padding:0 5vw 32px}
+.mood-ribbon-window{position:relative;overflow:hidden;padding:32px 0 24px;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.mood-ribbon-track{display:flex;width:max-content;animation:mood-ribbon-drift 52s linear infinite;will-change:transform}
+.mood-ribbon-group{display:flex;align-items:flex-start;gap:28px;padding-right:28px}
+.mood-ribbon-card{flex:none;width:clamp(250px,26vw,360px);padding:14px 14px 22px;background:#fffaf0;border:1px solid #b7a38340;box-shadow:0 12px 24px #58402a12;transform:rotate(-2deg);transition:transform .55s var(--out),box-shadow .55s}
+.mood-ribbon-card--1{margin-top:28px;transform:rotate(2deg)}
+.mood-ribbon-card--2{margin-top:8px;transform:rotate(-1deg)}
+.mood-ribbon-card-top{display:flex;align-items:center;justify-content:flex-end;padding:2px 2px 12px}.mood-ribbon-card-top>span{font-size:19px;line-height:1;color:#ad8c57}
+.mood-ribbon-photo{position:relative;overflow:hidden;height:clamp(280px,30vw,390px);background:#cfc5b2;border-radius:3px}
+.mood-ribbon-card--1 .mood-ribbon-photo{border-radius:46% 46% 3px 3px}
+.mood-ribbon-photo img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--out)}
+.mood-ribbon-photo::after{content:'';position:absolute;inset:55% 0 0;background:linear-gradient(transparent,#1c241a8c);pointer-events:none}
+.mood-ribbon-photo>span{position:absolute;z-index:1;bottom:18px;left:16px;right:16px;font:italic 400 15px/1.4 'Lora',Georgia,serif;color:#fff8eb}
+.mood-ribbon-swatches{display:flex;align-items:center;gap:5px;margin:16px 0 14px}.mood-ribbon-swatches i{width:16px;height:16px;flex:none;border-radius:50%;border:1px solid #685b3f20}.mood-ribbon-swatches>span{margin-left:auto;font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:#a09179}
+.mood-ribbon-card h3{font:400 clamp(21px,2vw,27px)/1.2 'Lora',Georgia,serif;letter-spacing:-.035em;color:#473f31}.mood-ribbon-card p{margin-top:9px;font-size:9px;line-height:1.6;letter-spacing:.1em;text-transform:uppercase;color:#97876e}
+.mood-ribbon-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 5vw 0;border-top:1px solid #9a805433;color:#77664c;font-size:11px;letter-spacing:.02em}
+.mood-ribbon-note{display:flex;align-items:center;gap:12px;font:italic 14px/1.5 'Lora',Georgia,serif}.mood-ribbon-note i{font-size:25px;font-style:normal}
+.mood-ribbon-toggle,.mood-ribbon-footer>a{display:flex;align-items:center;gap:16px;min-height:44px}.mood-ribbon-toggle>span,.mood-ribbon-footer>a>span{font-size:19px}.mood-ribbon-footer>a{border-bottom:1px solid #9a805450}
+.mood-ribbon-window:hover .mood-ribbon-track,.mood-ribbon-window:focus-within .mood-ribbon-track{animation-play-state:paused!important}
+@keyframes mood-ribbon-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@media(hover:hover){.mood-ribbon-card:hover{transform:translateY(-8px) rotate(0deg);box-shadow:0 20px 32px #58402a25}.mood-ribbon-card:hover img{transform:scale(1.045)}}
+@media(max-width:760px){
+  .moodboards.mood-ribbon-section .editorial-head{padding-inline:6vw;padding-bottom:12px}.mood-ribbon-window{padding-top:24px;padding-bottom:24px}.mood-ribbon-card{width:250px;padding:12px 12px 20px}.mood-ribbon-group{gap:20px;padding-right:20px}.mood-ribbon-photo{height:300px}.mood-ribbon-track{animation-duration:46s}.mood-ribbon-footer{padding-inline:6vw;flex-wrap:wrap;gap:4px 20px}.mood-ribbon-note{width:100%;font-size:13px}.mood-ribbon-toggle{margin-right:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  .mood-ribbon-window{overflow-x:auto;mask-image:none;padding-inline:5vw;scroll-snap-type:x proximity}.mood-ribbon-track{animation:none;transform:none;will-change:auto}.mood-ribbon-group.is-copy{display:none}.mood-ribbon-card{transform:none;transition:none;scroll-snap-align:center}.mood-ribbon-photo img{transition:none}.mood-ribbon-card:hover,.mood-ribbon-card:hover img{transform:none}.mood-ribbon-toggle{display:none}
+}
+

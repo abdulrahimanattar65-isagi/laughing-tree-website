@@ -1,38 +1,43 @@
-/* Keep both complete lines' space reserved while the visible text types out. */
-.statement.about-typing{display:grid;text-wrap:wrap}
-.statement.about-typing>span{display:block;grid-area:1 / 1;min-width:0}
-.about-heading-space{visibility:hidden;pointer-events:none;user-select:none}
-.stats .stat-count{display:grid;font-variant-numeric:tabular-nums}
-.stat-count>span{grid-area:1 / 1}
-.stat-count-space{visibility:hidden;user-select:none}
-
-/* Tint the supplied transparent tree to a warm wood shade beside the photos. */
-.about .ab-left{position:relative;isolation:isolate}
-.about .ab-left::before{
-  content:'';position:absolute;z-index:-1;top:8%;right:-18%;width:90%;aspect-ratio:1;
-  background:#c2a581;opacity:.48;pointer-events:none;
-  -webkit-mask:url('/images/about-celebration-tree.png') center / 135% no-repeat;
-  mask:url('/images/about-celebration-tree.png') center / 135% no-repeat;
+﻿/* About alone owns its pinned cinematic timeline. The homepage hero is unchanged. */
+.about.about-cinematic{position:relative;padding:0;background:var(--ink);color:var(--ivory);overflow:visible}
+.about-cinema{position:relative;isolation:isolate;height:calc(100svh - 86px);overflow:hidden;background:var(--ink);color:var(--ivory)}
+.about-cinema-eyebrow{position:absolute;z-index:4;top:32px;left:0;right:0;text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold2)}
+.about-cinema-media{position:absolute;z-index:0;left:50%;top:50%;translate:-50% -50%;width:32%;height:auto;aspect-ratio:1672/941;overflow:hidden;contain:layout paint}
+.about-cinema-media>img{width:100%;height:100%;object-fit:cover;object-position:center}
+.about-cinema-shade{position:absolute;inset:0;background:linear-gradient(180deg,#0a090830,transparent 25%,#0a09084d 40%,#0a0908d9 100%)}
+.about-editorial-word{position:absolute;z-index:2;top:50%;translate:0 -50%;width:26%;font:500 clamp(34px,4.6vw,78px)/1.06 var(--serif);letter-spacing:-.045em;text-wrap:balance}
+.about-editorial-word--left{left:5%}.about-editorial-word--right{right:5%;text-align:right;color:var(--gold2)}
+.about-cinema-heading{position:absolute;z-index:3;left:5%;right:5%;bottom:8%;margin:0;text-align:center;font:500 clamp(32px,4.4vw,64px)/1.1 var(--serif);letter-spacing:-.035em;text-shadow:0 2px 20px #0a090830}
+.about-cinema-heading>span,.about-cinema-heading>em{display:block}.about-cinema-heading>em{font-weight:400;color:var(--gold2)}
+.about-cinema-copy{position:absolute;z-index:3;bottom:33%;width:29%;max-width:38ch;font:400 15px/1.8 var(--sans);color:var(--ivory);text-wrap:pretty}
+.about-cinema-copy--left{left:6%}.about-cinema-copy--right{right:6%}
+.about-details{position:relative;display:grid;grid-template-columns:minmax(180px,300px) minmax(0,1fr);align-items:center;gap:8vw;padding:44px 6vw;background:var(--ivory);color:var(--ink)}
+.about-details>img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:2px}
+.about-details::before{content:'';position:absolute;right:4%;top:0;bottom:0;width:32%;background:#c2a581;opacity:.15;mask:url('/images/about-celebration-tree.png') center / contain no-repeat;-webkit-mask:url('/images/about-celebration-tree.png') center / contain no-repeat;pointer-events:none}
+.about-details .stats{margin:0;padding:24px 0;justify-content:space-between;border-color:#80684440;gap:24px}
+.stats .stat-count{display:grid;font-variant-numeric:tabular-nums}.stat-count>span{grid-area:1 / 1}.stat-count-space{visibility:hidden;user-select:none}
+@media(max-width:760px){
+  .about-cinema{height:calc(100svh - 84px)}
+  .about-cinema-eyebrow{top:24px;font-size:9px}
+  .about-cinema-media{width:62%}
+  .about-cinema-shade{background:linear-gradient(180deg,#0a090820,#0a090875 24%,#0a090875 60%,#0a0908dc 100%)}
+  .about-editorial-word{width:80%;left:10%;right:10%;font-size:clamp(32px,7.7vw,52px);text-align:center}
+  .about-editorial-word--left{top:27%}.about-editorial-word--right{top:71%}
+  .about-cinema-heading{left:6%;right:6%;bottom:7%;font-size:clamp(28px,7.3vw,44px);line-height:1.13}
+  .about-cinema-copy{width:auto;max-width:none;left:7%;right:7%;font-size:13px;line-height:1.7}
+  .about-cinema-copy--left{top:24%;bottom:auto}.about-cinema-copy--right{top:46%;bottom:auto}
+  .about-details{grid-template-columns:1fr;gap:28px;padding:32px 6vw}
+  .about-details>img{max-width:350px;justify-self:center}
+  .about-details .stats{gap:16px;flex-wrap:nowrap}.about-details .stats b{font-size:32px}.about-details .stats small{font-size:11px}
 }
-@media(max-width:900px){.about .ab-left::before{right:-5%;width:78%;top:10%;opacity:.42}}
-@media(max-width:560px){.about .ab-left::before{right:-6%;width:85%;top:14%}}
-
-/* Reveal the photographs and copy in sequence as their columns enter view. */
-.about .ab-left.rv.in,.about .ab-copy.rv.in{animation:none;clip-path:none}
-.about .ab-left .ab-img,.about .ab-copy>p{opacity:0}
-.about .ab-left.in .ab-img{animation:about-slide-up .95s var(--out) both}
-.about .ab-left.in .ab-img.b{animation-delay:240ms}
-.about .ab-copy.in>p{animation:about-slide-up .85s var(--out) both;animation-delay:380ms}
-.about .ab-copy.in>p:nth-of-type(2){animation-delay:560ms}
-.about .ab-copy:focus-within>p{animation:none;opacity:1}
-@keyframes about-slide-up{
-  from{opacity:0;transform:translateY(52px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@media(max-width:900px){
-  .about .ab-copy.in>p{animation-delay:0ms}
-  .about .ab-copy.in>p:nth-of-type(2){animation-delay:180ms}
+@media(max-height:650px){
+  .about-cinema-copy{font-size:12px;line-height:1.5}
+  .about-cinema-heading{font-size:clamp(25px,4vw,42px);bottom:5%}
 }
 @media(prefers-reduced-motion:reduce){
-  .about .ab-left .ab-img,.about .ab-copy>p{opacity:1;transform:none;animation:none}
+  .about-cinema{height:auto;min-height:calc(100svh - 86px);padding:96px 6vw 40px;display:flex;flex-direction:column;gap:24px}
+  .about-cinema-media{position:relative;left:auto;top:auto;translate:none;width:100%;height:auto;aspect-ratio:1672/941}
+  .about-cinema-shade,.about-editorial-word{display:none}
+  .about-cinema-heading,.about-cinema-copy{position:relative;inset:auto;width:auto;max-width:65ch;margin:0;opacity:1;visibility:visible;transform:none}
+  .about-cinema-copy{font-size:14px}.about-cinema-heading{text-align:left}
 }

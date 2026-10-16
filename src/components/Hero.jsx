@@ -1,115 +1,120 @@
-import { useEffect, useRef, useState } from 'react'
-import { ENTRANCE } from '../data'
+﻿import { useEffect, useRef, useState } from 'react'
 import './Hero.css'
 
+const SCENES = [
+  { image: 'lt2', title: ['Beautiful', 'beginnings.'], label: 'Wedding dreams', heading: 'A little magic. A lifetime of memories.', text: 'Thoughtfully imagined weddings, filled with flowers, light and everything that makes you, you.', link: 'Explore our celebrations', target: 'services' },
+  { image: 'lt9', title: ['Moments made', 'extraordinary.'], label: 'Our creations', heading: 'Every detail tells your story.', text: 'From the first welcome to the last dance, we turn your inspiration into a world of its own.', link: 'Discover our work', target: 'gallery' },
+  { image: 'lt3', title: ['Your perfect', 'somewhere.'], label: 'Beautiful settings', heading: 'Find a place to fall in love with.', text: 'Intimate gardens, grand celebrations and beautiful spaces, brought to life with a personal touch.', link: 'Find your setting', target: 'venues' },
+]
+const DURATION = 6000
+
 export default function Hero() {
-  const [position, setPosition] = useState(0)
-  const [hovered, setHovered] = useState(false)
-  const [focused, setFocused] = useState(false)
+  const [active, setActive] = useState(0)
+  const [interacting, setInteracting] = useState(false)
+  const [hidden, setHidden] = useState(document.hidden)
+  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const touchStart = useRef(null)
-  const autoplayTimer = useRef(null)
-  const [manualRotation, setManualRotation] = useState(false)
-  const count = ENTRANCE.length
-  const active = ((position % count) + count) % count
-  const move = direction => {
-    window.clearTimeout(autoplayTimer.current)
-    setManualRotation(true)
-    setPosition(value => value + direction)
-  }
-  const goTo = index => {
-    window.clearTimeout(autoplayTimer.current)
-    setManualRotation(true)
-    setPosition(value => {
-      const current = ((value % count) + count) % count
-      let distance = (index - current + count) % count
-      if (distance > count / 2) distance -= count
-      return value + distance
-    })
-  }
+  const hero = useRef(null)
+  const running = !interacting && !hidden && !reducedMotion
+  const move = direction => setActive(value => (value + direction + SCENES.length) % SCENES.length)
 
   useEffect(() => {
-    if (hovered || focused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    const stop = () => window.clearTimeout(autoplayTimer.current)
-    const restart = () => {
-      stop()
-      if (document.hidden) return
-      // Always wait a fresh three seconds; never catch up on hidden-tab time.
-      autoplayTimer.current = window.setTimeout(() => {
-        if (!document.hidden) {
-          setManualRotation(false)
-          setPosition(value => value + 1)
-        }
-      }, 3000)
-    }
-
-    restart()
-    document.addEventListener('visibilitychange', restart)
-    window.addEventListener('pagehide', stop)
-    window.addEventListener('pageshow', restart)
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const updateMotion = () => setReducedMotion(media.matches)
+    const updateVisibility = () => setHidden(document.hidden)
+    media.addEventListener('change', updateMotion)
+    document.addEventListener('visibilitychange', updateVisibility)
     return () => {
-      stop()
-      document.removeEventListener('visibilitychange', restart)
-      window.removeEventListener('pagehide', stop)
-      window.removeEventListener('pageshow', restart)
+      media.removeEventListener('change', updateMotion)
+      document.removeEventListener('visibilitychange', updateVisibility)
     }
-  }, [hovered, focused, position])
+  }, [])
 
-  const offsetOf = index => {
-    let offset = (index - active + count) % count
-    if (offset > count / 2) offset -= count
-    return offset
-  }
-  const current = ENTRANCE[active]
+  useEffect(() => {
+    if (!running) return
+    const timer = window.setTimeout(() => move(1), DURATION)
+    return () => window.clearTimeout(timer)
+  }, [active, running])
 
-  return <header className="gallery-hero" data-light id="top" aria-label="Discover Laughing Tree">
-    <div className="gallery-hero-intro">
-      <span>Thoughtfully designed. Beautifully celebrated.</span>
-      <a href="#contact">Begin your story <span aria-hidden="true">↗</span></a>
+  useEffect(() => {
+    const element = hero.current
+    if (reducedMotion) {
+      element.style.removeProperty('--hero-scroll')
+      element.style.removeProperty('--hero-progress')
+      return
+    }
+
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const { top, height } = element.getBoundingClientRect()
+      const distance = Math.min(height, Math.max(0, -top))
+      element.style.setProperty('--hero-scroll', `${distance}px`)
+      element.style.setProperty('--hero-progress', distance / height)
+    }
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+    }
+  }, [reducedMotion])
+
+  const scene = SCENES[active]
+  return <header ref={hero} className="cinematic-hero" id="top" aria-label="Discover Laughing Tree">
+    <div className="cinematic-scenes" aria-hidden="true">
+      {SCENES.map((item, index) => <div key={item.image} className={'cinematic-scene' + (active === index ? ' is-active' : '')}>
+        <img src={'/images/' + item.image + '.png'} alt="" fetchPriority={index === 0 ? 'high' : 'auto'} draggable="false" />
+      </div>)}
     </div>
-    <div className="gallery-hero-stage" role="region" aria-roledescription="carousel" aria-label="Celebration experiences"
-      onFocusCapture={event => setFocused(event.target.matches(':focus-visible'))}
-      onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false) }}
+    <div className="cinematic-shade" aria-hidden="true" />
+    <div className="cinematic-content" role="region" aria-roledescription="carousel" aria-label="Celebration inspiration"
+      onFocusCapture={() => setInteracting(true)}
+      onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false) }}
       onKeyDown={event => {
-        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-          event.preventDefault()
-          move(event.key === 'ArrowRight' ? 1 : -1)
-        }
+        if (!['ArrowRight', 'ArrowLeft'].includes(event.key)) return
+        event.preventDefault()
+        move(event.key === 'ArrowRight' ? 1 : -1)
       }}
       onTouchStart={event => { touchStart.current = event.touches[0].clientX }}
       onTouchEnd={event => {
         if (touchStart.current === null) return
         const distance = event.changedTouches[0].clientX - touchStart.current
-        if (Math.abs(distance) > 45) move(distance < 0 ? 1 : -1)
+        if (Math.abs(distance) > 50) move(distance < 0 ? 1 : -1)
         touchStart.current = null
       }}>
-      <div className="gallery-hero-track" style={{ '--rotation-duration': manualRotation ? '0.55s' : '1.2s' }}>
-        {ENTRANCE.map((item, index) => {
-          const offset = offsetOf(index)
-          return <button key={item.id} type="button"
-            className={'gallery-hero-card' + (index === active ? ' is-current' : '') + (Math.abs(offset) > 1 ? ' is-rear' : '')}
-            style={{ '--angle': ((index - position) * 360 / count) + 'deg', '--distance': Math.abs(offset), '--card-scale': index === active ? 1.12 : 0.5 }}
-            onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-            onClick={() => goTo(index)} aria-hidden={Math.abs(offset) > 1} aria-label={'Preview ' + item.label} aria-pressed={index === active} tabIndex={index === active ? 0 : -1}>
-            <img src={'/images/' + item.img + '.png'} alt={item.text} fetchPriority={index === 0 ? 'high' : 'auto'} draggable="false" />
-            <span className="gallery-card-index" aria-hidden="true">0{index + 1}</span>
-          </button>
-        })}
+      <div className="cinematic-story" key={scene.image}>
+        <p className="cinematic-eyebrow">Laughing Tree · Weddings & celebrations</p>
+        <h1>{scene.title.map(line => <span key={line}>{line}</span>)}</h1>
+        <div className="cinematic-caption">
+          <h2>{scene.heading}</h2><p>{scene.text}</p>
+          <a href={'#' + scene.target}>{scene.link}<span aria-hidden="true">↗</span></a>
+        </div>
       </div>
-      <button type="button" className="gallery-side-select is-previous"
-        aria-label={'Bring ' + ENTRANCE[(active - 1 + count) % count].label + ' to front'}
-        onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-        onClick={() => move(-1)} />
-      <button type="button" className="gallery-side-select is-next"
-        aria-label={'Bring ' + ENTRANCE[(active + 1) % count].label + ' to front'}
-        onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-        onClick={() => move(1)} />
-      <h1 className="gallery-hero-title" aria-label="Laughing Tree — beautifully imagined celebrations">
-        <span key={current.id} aria-hidden="true">{current.label}</span>
-      </h1>
+      <div className="cinematic-selector" onMouseEnter={() => setInteracting(true)} onMouseLeave={event => { if (!event.currentTarget.contains(document.activeElement)) setInteracting(false) }}>
+        {SCENES.map((item, index) => <button key={item.image} type="button" className={'cinematic-thumbnail' + (active === index ? ' is-active' : '')}
+          aria-label={'Show ' + item.label} aria-pressed={active === index} onClick={() => setActive(index)}>
+          <img src={'/images/' + item.image + '.png'} alt="" />
+          <span className="cinematic-thumbnail-label">{item.label}</span>
+          {active === index && <svg key={active + '-' + running} className="cinematic-progress" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" style={{ animationDuration: DURATION + 'ms', animationPlayState: running ? 'running' : 'paused' }} /></svg>}
+        </button>)}
+      </div>
     </div>
-    <div className="gallery-hero-footer">
-      <div className="gallery-hero-description"><span className="gallery-hero-kicker">Your moments. Beautifully imagined.</span><p>{current.text}</p></div>
+    <div className="cinematic-mist" aria-hidden="true" />
+    <div className="cinematic-bottom">
+      <div className="cinematic-bottom-heading"><span>Made with heart. Remembered forever.</span></div>
+      <div className="celebration-bar">
+        <a href="#services"><span className="celebration-bar-icon" aria-hidden="true">✧</span><span><strong>Your celebration</strong><small>Discover what we create</small></span></a>
+        <a href="#venues"><span className="celebration-bar-icon" aria-hidden="true">⌖</span><span><strong>The perfect setting</strong><small>Explore our venues</small></span></a>
+        <a href="#gallery"><span className="celebration-bar-icon" aria-hidden="true">▧</span><span><strong>A little inspiration</strong><small>Wander through our work</small></span></a>
+        <a className="celebration-bar-cta" href="#contact"><span>Let’s dream together</span><span className="celebration-bar-arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <a className="cinematic-scroll" href="#about-us">Discover Laughing Tree <span aria-hidden="true">↓</span></a>
     </div>
   </header>
 }

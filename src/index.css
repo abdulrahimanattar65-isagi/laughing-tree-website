@@ -1,4 +1,5 @@
 :root{--ink:#0a0908;--char:#181614;--ash:#8d867a;--ivory:#efe8da;--gold:#c9ad74;--gold2:#e8d6a8;--serif:'Bodoni Moda','Didot','Bodoni 72',Georgia,serif;--sans:'Hanken Grotesk',system-ui,sans-serif;--ease:cubic-bezier(.76,0,.24,1);--out:cubic-bezier(.16,1,.3,1)}
+.contact .enquiry-hint{margin-top:12px;font-size:12px;line-height:1.6;color:var(--ash)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-x:clip}
 body{background:var(--ink);color:var(--ivory);font:300 16px/1.7 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}

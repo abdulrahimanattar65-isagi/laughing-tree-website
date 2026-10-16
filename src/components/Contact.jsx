@@ -6,8 +6,16 @@ export default function Contact() {
   const set = k => e => setF({ ...f, [k]: e.target.value })
   const submit = e => {
     e.preventDefault()
-    const body = `Hello Laughing Tree! I'm ${f.name} (${f.phone}). Event: ${f.type}, date: ${f.date || 'TBD'}. ${f.msg}`
-    window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent('Event enquiry')}&body=${encodeURIComponent(body)}`
+    const body = [
+      'Hello Laughing Tree! I would like to enquire about an event.',
+      '',
+      `Name: ${f.name.trim()}`,
+      `Phone: ${f.phone.trim()}`,
+      `Event: ${f.type}`,
+      `Date: ${f.date || 'To be decided'}`,
+      ...(f.msg.trim() ? ['', `My vision: ${f.msg.trim()}`] : []),
+    ].join('\n')
+    window.location.href = `https://wa.me/${CONTACT.phone.replace(/\D/g, '')}?text=${encodeURIComponent(body)}`
   }
   return (
     <section className="contact" id="contact">
@@ -25,7 +33,8 @@ export default function Contact() {
           <div className="two"><input type="date" aria-label="Event date" value={f.date} onChange={set('date')} />
             <select value={f.type} onChange={set('type')}>{EVENT_TYPES.map(t => <option key={t}>{t}</option>)}</select></div>
           <textarea rows="4" placeholder="Tell us about your vision" value={f.msg} onChange={set('msg')} />
-          <button className="btn fill" type="submit">Send enquiry</button>
+          <button className="btn fill" type="submit">Enquire on WhatsApp</button>
+          <p className="enquiry-hint">Opens WhatsApp with your enquiry ready. Tap Send to share it with us.</p>
         </Reveal>
       </div>
     </section>
