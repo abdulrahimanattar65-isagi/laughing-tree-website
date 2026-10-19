@@ -1,9 +1,14 @@
 // Edit your content here. Images live in /public/images
-export const BEFORE_AFTER = Array.from({ length: 5 }, (_, i) => ({
+export const BEFORE_AFTER = [...Array.from({ length: 5 }, (_, i) => ({
   id: i + 1,
   before: `/images/af${i + 1}.png`,
   after: `/images/bf${i + 1}.png`,
-}))
+})), {
+  id: 6,
+  before: '/images/mantap-before.png',
+  after: '/images/mantap-after.png',
+  imageFilter: 'saturate(0.5) sepia(0.12) contrast(0.92) brightness(0.96)',
+}]
 
 export const CONTACT = {
   phone: '+91 9986342671',

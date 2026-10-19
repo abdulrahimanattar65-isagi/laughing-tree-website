@@ -251,7 +251,7 @@ footer{padding:5vw 4vw 2vw}
 .before-after{padding:clamp(40px,4vw,72px) 0;background:var(--char)}
 .comparison-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,3vw,48px);padding:0 4vw}
 .comparison{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--ink);isolation:isolate}
-.comparison>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.comparison>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;filter:var(--image-filter,none)}
 .comparison-before{clip-path:inset(0 calc(100% - var(--split)) 0 0)}
 .comparison-label{position:absolute;top:16px;padding:6px 12px;background:rgba(10,9,8,.75);color:var(--ivory);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;pointer-events:none}
 .before-label{left:16px}.after-label{right:16px}

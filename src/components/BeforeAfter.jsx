@@ -6,7 +6,7 @@ function Comparison({ pair }) {
 
   return (
     <figure className="comparison-card">
-      <div className="comparison" style={{ '--split': `${position}%` }}>
+      <div className="comparison" style={{ '--split': `${position}%`, '--image-filter': pair.imageFilter }}>
         <img src={pair.after} alt={`Celebration space ${pair.id} after styling`} loading="lazy" draggable="false" />
         <img className="comparison-before" src={pair.before} alt={`Celebration space ${pair.id} before styling`} loading="lazy" draggable="false" />
         <div className="comparison-divider" aria-hidden="true"><span>↔</span></div>
