@@ -11,8 +11,9 @@ export default function Details() {
   const [hovered, setHovered] = useState(null)
   const [focused, setFocused] = useState(null)
   const [imageHovered, setImageHovered] = useState(false)
+  const [imageTapped, setImageTapped] = useState(false)
   const preview = hovered ?? focused ?? on
-  const interacting = hovered !== null || focused !== null || imageHovered
+  const interacting = hovered !== null || focused !== null || imageHovered || imageTapped
   const section = useRef(null)
 
   useEffect(() => {
@@ -36,12 +37,15 @@ export default function Details() {
   }, [])
 
   useEffect(() => {
-    if (paused || interacting || !inView || !pageVisible) return
+    if (paused || interacting || selection > 0 || !inView || !pageVisible) return
     const timer = window.setTimeout(() => setOn(index => (index + 1) % DETAILS.length), 2500)
     return () => window.clearTimeout(timer)
   }, [on, selection, paused, interacting, inView, pageVisible])
 
   const select = index => {
+    setImageTapped(false)
+    setHovered(null)
+    setFocused(null)
     setOn(index)
     setSelection(value => value + 1)
   }
@@ -59,13 +63,17 @@ export default function Details() {
         </div>
         <div className="d-list">
           <h2 id="details-heading">Little details.<br />Lasting memories.</h2>
-          <ul onMouseLeave={() => setHovered(null)}>{DETAILS.map((d, k) => <li key={d.name}><button className={k === preview ? 'on' : ''} aria-pressed={k === on} aria-controls="details-preview" onClick={() => select(k)}
-            onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(k) }}
-            onFocus={() => setFocused(k)} onBlur={() => setFocused(null)}>{d.name}</button></li>)}</ul>
+          <ul onPointerLeave={() => setHovered(null)}>{DETAILS.map((d, k) => <li key={d.name}><button type="button" className={k === preview ? 'on' : ''} aria-pressed={k === on} aria-controls="details-preview" onClick={() => select(k)}
+            onPointerDown={event => { if (event.pointerType === 'touch') select(k) }}
+            onPointerEnter={event => { if (event.pointerType !== 'touch') setHovered(k) }}
+            onPointerLeave={() => setHovered(null)}
+            onFocus={event => { if (event.currentTarget.matches(':focus-visible')) setFocused(k) }} onBlur={() => setFocused(null)}>{d.name}</button></li>)}</ul>
         </div>
         <figure className={'d-stage' + (interacting ? ' is-hovered' : '')} id="details-preview" aria-live={paused || interacting ? 'polite' : 'off'}
-          onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setImageHovered(true) }} onMouseLeave={() => setImageHovered(false)}>
+          onPointerEnter={event => { if (event.pointerType !== 'touch') setImageHovered(true) }} onPointerLeave={() => setImageHovered(false)}>
           {DETAILS.map((d, k) => <div key={d.name} className={'detail-photo' + (k === preview ? ' is-active' : '')} aria-hidden={k !== preview}><img src={`/images/${d.img}.png`} alt={d.name} loading="lazy" style={{ objectPosition: d.pos, '--z': d.z }} /></div>)}
+          <button type="button" className="details-touch-preview" aria-label="Highlight details image" aria-pressed={imageTapped}
+            onClick={() => setImageTapped(value => !value)} />
           <figcaption key={preview} className="details-caption"><b>{DETAILS[preview].name}</b><span>{DETAILS[preview].text}</span></figcaption>
         </figure>
       </div>

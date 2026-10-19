@@ -22,9 +22,14 @@ footer.site-footer{position:relative;isolation:isolate;padding:70px 5vw 0;backgr
 .site-footer .footer-wordmark>.brand-mark{filter:drop-shadow(0 -1px 0 #65634b) drop-shadow(1px 1px 0 #24251e) drop-shadow(1px 2px 0 #20211b) drop-shadow(2px 3px 0 #151611) drop-shadow(3px 5px 0 #10110e) drop-shadow(0 16px 12px #0009)}
 .footer-logo-spotlight{position:absolute;inset:0;pointer-events:none;color:#e8d6a8;opacity:0;transition:opacity .3s;mask-image:radial-gradient(circle 150px at var(--spot-x,50%) var(--spot-y,50%),#000 0%,#000b 35%,transparent 100%);-webkit-mask-image:radial-gradient(circle 150px at var(--spot-x,50%) var(--spot-y,50%),#000 0%,#000b 35%,transparent 100%)}
 @media(hover:hover){.footer-wordmark:hover .footer-logo-spotlight{opacity:1}}
+@media(hover:none){
+  .site-footer .footer-wordmark .footer-logo-spotlight{opacity:1;mask-image:radial-gradient(ellipse 38% 80% at 50% 50%,#000,transparent);-webkit-mask-image:radial-gradient(ellipse 38% 80% at 50% 50%,#000,transparent);mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;animation:footer-touch-spotlight 6s ease-in-out infinite alternate}
+}
+@keyframes footer-touch-spotlight{from{mask-position:-35vw 0;-webkit-mask-position:-35vw 0}to{mask-position:35vw 0;-webkit-mask-position:35vw 0}}
 .footer-wordmark:focus-visible .footer-logo-spotlight{opacity:1;mask-image:none;-webkit-mask-image:none}
 .footer-logo-spotlight .brand-mark{filter:drop-shadow(0 -1px 0 #fff4d5) drop-shadow(0 2px 0 #8a7345)}
 @media(max-width:1000px){.site-footer .footer-main{grid-template-columns:1.5fr 1fr;gap:40px 50px}.footer-bottom{flex-wrap:wrap}.site-footer .footer-wordmark{font-size:14vw}}
 @media(max-width:560px){footer.site-footer{padding:44px 6vw 0}.site-footer .footer-main{grid-template-columns:1fr 1fr;gap:32px 20px}.footer-brand,.footer-connect{grid-column:1/-1}.footer-brand>p{max-width:38ch}.footer-bottom{gap:16px;margin-top:20px}.footer-bottom>span:first-child{flex-basis:100%}.site-footer .footer-wordmark{width:calc(100% + 12vw);margin:18px -6vw -5vw}.footer-logo-spotlight{transition:none}}
 @media(prefers-reduced-motion:reduce){.site-footer a{transition:none!important}.site-footer .footer-talk:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){.site-footer .footer-wordmark>.brand-mark,.footer-logo-spotlight{transform:none;transition:none}}
+@media(prefers-reduced-motion:reduce){.site-footer .footer-wordmark .footer-logo-spotlight{animation:none}}

@@ -68,7 +68,7 @@ export default function Hero() {
   const scene = SCENES[active]
   return <header ref={hero} className="cinematic-hero" id="top" aria-label="Discover Laughing Tree">
     <div className="cinematic-scenes" aria-hidden="true">
-      {SCENES.map((item, index) => <div key={item.image} className={'cinematic-scene' + (active === index ? ' is-active' : '')}>
+      {SCENES.map((item, index) => <div key={item.image} className={'cinematic-scene cinematic-scene--' + item.image + (active === index ? ' is-active' : '')}>
         <img src={'/images/' + item.image + '.png'} alt="" fetchPriority={index === 0 ? 'high' : 'auto'} draggable="false" />
       </div>)}
     </div>

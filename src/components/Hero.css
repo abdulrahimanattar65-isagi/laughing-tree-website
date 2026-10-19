@@ -40,7 +40,9 @@
 .cinematic-scroll span{animation:cinematic-scroll-cue 2s ease-in-out infinite}
 @keyframes cinematic-scroll-cue{0%,100%{transform:translateY(-3px)}50%{transform:translateY(3px)}}
 @media(max-width:760px){
-  .cinematic-scenes{transform:translateY(calc(var(--hero-scroll) * .18)) scale(calc(1 + var(--hero-progress) * .03))}
+  /* Anchor the full-height photo on the couple without extra zoom or blur. */
+  .cinematic-scene--lt3 img{object-position:80% center;transform:none;transition:none}
+  .cinematic-scenes{transform:none}
   .cinematic-content{transform:translateY(calc(var(--hero-scroll) * -.08))}
   .cinematic-bottom{transform:none}
 }
@@ -49,3 +51,4 @@
   .cinematic-mist{translate:none}
   .cinematic-scroll span{animation:none}
 }
+@media(hover:none){.cinematic-thumbnail-label{display:none}}
