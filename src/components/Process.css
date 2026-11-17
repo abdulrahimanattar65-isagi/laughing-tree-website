@@ -1,7 +1,42 @@
-.process.process-illustrated{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 95% 0%,#d3b97c26,transparent 55%),var(--ivory)}
-.process-background{position:absolute;inset:0;z-index:-1;width:100%;height:100%;color:#8c6f33;opacity:.13;pointer-events:none}
-.process-illustrated .step{position:relative;border-top-color:#8c6f334d;padding-top:24px}
-.process-step-icon{position:absolute;top:20px;right:12px;width:65px;height:65px;color:#8c6f33;opacity:.2;pointer-events:none;transition:opacity .35s,transform .35s}
-.process-illustrated .step:hover .process-step-icon{opacity:.5;transform:translateY(-4px) rotate(-5deg)}
-@media(max-width:900px){.process-background{opacity:.09}.process-step-icon{width:58px;height:58px;right:8px}}
-@media(prefers-reduced-motion:reduce){.process-step-icon{transition:none}.process-illustrated .step:hover .process-step-icon{transform:none}}
+.process.process-clock{padding:64px 6vw 32px;background:var(--paper);color:var(--charcoal);overflow:hidden}
+.process-clock-heading{text-align:center;max-width:900px;margin:0 auto 12px}
+.process-clock-heading .eyebrow{display:block;margin-bottom:16px;letter-spacing:.12em;text-transform:uppercase}
+.process.process-clock h2{margin:0;text-wrap:balance}
+.process-clock h2 em{font-weight:400}
+.process-clock-stage{--radius:270px;--reach:17%;position:relative;height:540px;max-width:1280px;margin:0 auto;overflow:hidden;isolation:isolate}
+.process-clock-art{position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--paper)}
+.process-clock-art img{position:absolute;right:0;bottom:0;width:52%;height:100%;object-fit:contain;object-position:right center;mix-blend-mode:multiply;opacity:0;transition:opacity 1.5s ease;mask-image:radial-gradient(ellipse at 56% 55%,#000 48%,transparent 74%)}
+.process-clock-art img.is-active{opacity:.9}
+.process-clock-arc{position:absolute;left:calc(var(--reach) - var(--radius) * 2);top:calc(50% - var(--radius));width:calc(var(--radius) * 2);height:calc(var(--radius) * 2);border:1px solid color-mix(in srgb,var(--charcoal) 16%,transparent);border-radius:50%}
+.process-clock-wheel{position:absolute;left:calc(var(--reach) - var(--radius));top:50%;width:0;height:0;transform:rotate(var(--turn));transition:transform 1.5s cubic-bezier(.65,0,.25,1)}
+.process-clock-spoke{position:absolute;left:0;top:0;width:0;height:0;transform:rotate(var(--angle));color:var(--step-color,var(--charcoal));opacity:.2;transition:opacity 1.3s ease}
+.process-clock-spoke.is-active{opacity:1}
+.process-clock[data-clock-visible=false] .process-clock-wheel,.process-clock[data-clock-visible=false] .process-clock-spoke{transition:none}
+.process-clock-dot{position:absolute;left:var(--radius);top:0;translate:-50% -50%;width:6px;height:6px;border-radius:50%;background:currentColor}
+.process-clock-number{position:absolute;left:calc(var(--radius) + 24px);top:0;translate:0 -50%;font:700 clamp(58px,6vw,84px)/1 var(--sans);letter-spacing:-.065em;font-variant-numeric:tabular-nums}
+.process-clock-copy{position:absolute;left:calc(var(--reach) + 142px);right:43%;top:50%;transform:translateY(-50%);animation:process-clock-copy-in 1s ease both}
+.process-clock-icon{display:block;width:38px;height:38px;margin-bottom:18px;color:var(--flow-accent)}
+.process-clock-icon svg{width:100%;height:100%}
+#root .process-clock-copy h3{font:400 32px/1.15 var(--serif);margin:0 0 10px}
+.process-clock-subtitle{display:block;font-size:14px;font-weight:500;margin-bottom:12px}
+#root .process-clock-copy p{max-width:34ch;font-size:16px;line-height:1.7;color:color-mix(in srgb,var(--charcoal) 65%,transparent)}
+@media(min-width:761px) and (max-width:1050px){.process-clock-stage{--reach:12%;--radius:240px;height:500px}.process-clock-copy{left:calc(var(--reach) + 128px);right:40%}.process-clock-art img{width:46%;opacity:0}.process-clock-art img.is-active{opacity:.8}#root .process-clock-copy p{font-size:14px}}
+@keyframes process-clock-copy-in{from{opacity:0}to{opacity:1}}
+@media(max-width:760px){
+  .process.process-clock{padding:32px 6vw 20px}
+  .process-clock-heading{margin-bottom:12px}
+  #root .process-clock-heading .eyebrow{font-size:10px;letter-spacing:.08em;margin-bottom:12px}
+  .process-clock-stage{--radius:210px;--reach:12%;height:480px;margin:0 -6vw}
+  .process-clock-art img{right:0;bottom:-12px;width:90%;height:260px;object-position:right bottom;mask-image:radial-gradient(ellipse at 56% 62%,#000 45%,transparent 76%)}
+  .process-clock-art img.is-active{opacity:.78}
+  .process-clock-arc{top:calc(35% - var(--radius))}
+  .process-clock-wheel{top:35%}
+  .process-clock-number{left:calc(var(--radius) + 18px);font-size:clamp(48px,13vw,66px)}
+  .process-clock-copy{left:calc(var(--reach) + 98px);right:6%;top:35%;text-shadow:0 1px 8px var(--paper)}
+  .process-clock-icon{width:28px;height:28px;margin-bottom:12px}
+  #root .process-clock-copy h3{font-size:24px;margin-bottom:6px}
+  .process-clock-subtitle{font-size:12px;margin-bottom:8px}
+  #root .process-clock-copy p{font-size:13px;line-height:1.6}
+}
+.process-clock[data-clock-visible=false] .process-clock-art img{transition:none}
+@media(prefers-reduced-motion:reduce){.process-clock-wheel,.process-clock-spoke,.process-clock-art img{transition:none}.process-clock-copy{animation:none}}

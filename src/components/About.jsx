@@ -5,8 +5,8 @@ import './About.css'
 import AboutStats from './AboutStats'
 
 gsap.registerPlugin(ScrollTrigger)
-const FIRST_LINE = 'More than an event.'
-const SECOND_LINE = 'A memory to hold onto.'
+const FIRST_LINE = 'Laughing Tree Events'
+const SECOND_LINE = 'Where Your Dream Wedding Comes to Life'
 
 export default function About() {
   const section = useRef(null)
@@ -23,8 +23,10 @@ export default function About() {
       const heading = element.querySelector('.about-cinema-heading')
       const copy = element.querySelectorAll('.about-cinema-copy')
       const shade = element.querySelector('.about-cinema-shade')
-      const width = () => element.clientWidth * (compact ? .62 : .32)
-      gsap.set(image, { width, height: () => width() / (1672 / 941), borderRadius: 6 })
+      const eyebrow = element.querySelector('.about-cinema-eyebrow')
+      const lightText = getComputedStyle(element).getPropertyValue('--ivory').trim()
+      const initialWidth = compact ? '62%' : '32%'
+      const initialHeight = () => (element.clientWidth || window.innerWidth) * (compact ? .62 : .32) / (1672 / 941)
       gsap.set(heading, { autoAlpha: 0, y: -60 })
       gsap.set(copy, { autoAlpha: 0, y: 28 })
       gsap.set(shade, { opacity: 0 })
@@ -37,10 +39,13 @@ export default function About() {
           pin: true, scrub: .8, anticipatePin: 1, invalidateOnRefresh: true,
         },
       })
-        .to(image, { width: '100%', height: '100%', borderRadius: 0, duration: 2.2 }, 0)
+        .fromTo(image,
+          { width: initialWidth, height: initialHeight, top: compact ? '43%' : '50%', borderRadius: 6, autoAlpha: 1 },
+          { width: '100%', height: '100%', top: '50%', borderRadius: 0, duration: 2.2 }, 0)
         .to(words[0], { xPercent: -40, scale: 1.12, autoAlpha: 0, duration: 1.3 }, .15)
         .to(words[1], { xPercent: 40, scale: 1.12, autoAlpha: 0, duration: 1.3 }, .15)
         .to(shade, { opacity: 1, duration: 1.2 }, 1.1)
+        .to(eyebrow, { color: lightText, opacity: 1, duration: 1.2 }, 1.1)
         .to(heading, { autoAlpha: 1, y: 0, duration: 1.1 }, 1.65)
         .to(copy, { autoAlpha: 1, y: 0, duration: .85, stagger: .18 }, 2.35)
         .to({}, { duration: .45 })
@@ -53,16 +58,18 @@ export default function About() {
 
   return <section ref={section} className="about about-cinematic" id="about-us" aria-labelledby="about-title">
     <div ref={frame} className="about-cinema">
-      <span className="about-cinema-eyebrow">A little about us</span>
-      <div className="about-cinema-media"><img src="/images/lt2.png" alt="Floral archway aisle" loading="eager" decoding="async" /><div className="about-cinema-shade" aria-hidden="true" /></div>
+      <span className="about-cinema-eyebrow">About Us</span>
+      <div className="about-cinema-media"><img src="/images/lt2.png" alt="Floral archway aisle" width="1672" height="941" loading="eager" decoding="async" /><div className="about-cinema-shade" aria-hidden="true" /></div>
       <div className="about-editorial-word about-editorial-word--left" aria-hidden="true">{FIRST_LINE}</div>
       <div className="about-editorial-word about-editorial-word--right" aria-hidden="true">{SECOND_LINE}</div>
+      <div className="about-cinema-content">
       <h2 id="about-title" className="about-cinema-heading"><span>{FIRST_LINE}</span><em>{SECOND_LINE}</em></h2>
-      <p className="about-cinema-copy about-cinema-copy--left">Laughing Tree is a team of event planners, decorators and dreamers who believe a celebration should feel effortless for you and unforgettable for your guests.</p>
-      <p className="about-cinema-copy about-cinema-copy--right">From the first mood board to the last fairy light, we design every corner of your event: mandaps, stages, entrances, tables and the small touches people remember for years.</p>
+      <p className="about-cinema-copy about-cinema-copy--left">At Laughing Tree, we specialize in turning your wedding day into a magical and unforgettable experience.</p>
+      <p className="about-cinema-copy about-cinema-copy--right">From intimate ceremonies to grand celebrations, our dedicated team of wedding planners, designers, and coordinators work closely with you to create a seamless and personalized event that reflects your unique love story.</p>
+      </div>
     </div>
     <div className="about-details">
-      <img src="/images/lt9.png" alt="Wedding stage framed with flowers and pink drapes" loading="lazy" />
+      <img src="/images/fingerprint-tree-guestbook.png" alt="A guest adding a fingerprint to the Laughing Tree wedding guestbook" loading="lazy" />
       <AboutStats />
     </div>
   </section>

@@ -1,8 +1,59 @@
-﻿import Logo from './Logo'
+import Logo from './Logo'
 import { CONTACT } from '../data'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import './Footer.css'
 
 export default function Footer() {
+  const wordmark = useRef(null)
+  useEffect(() => {
+    const element = wordmark.current
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const point = { x: 0, y: 0 }
+    const paint = () => {
+      element.style.setProperty('--spot-x', `${point.x}px`)
+      element.style.setProperty('--spot-y', `${point.y}px`)
+    }
+    const followX = gsap.quickTo(point, 'x', { duration: .65, ease: 'power3.out', onUpdate: paint })
+    const followY = gsap.quickTo(point, 'y', { duration: .65, ease: 'power3.out', onUpdate: paint })
+    const locate = event => {
+      const bounds = element.getBoundingClientRect()
+      const next = { x: event.clientX - bounds.left, y: event.clientY - bounds.top }
+      element.style.setProperty('--cursor-x', `${next.x}px`)
+      element.style.setProperty('--cursor-y', `${next.y}px`)
+      return next
+    }
+    const enter = event => {
+      if (event.pointerType === 'touch') return
+      const next = locate(event)
+      followX(next.x, next.x)
+      followY(next.y, next.y)
+      followX.tween.progress(1).pause()
+      followY.tween.progress(1).pause()
+      paint()
+    }
+    const move = event => {
+      if (event.pointerType === 'touch') return
+      const next = locate(event)
+      if (motion.matches) {
+        followX.tween.pause()
+        followY.tween.pause()
+        Object.assign(point, next)
+        paint()
+      } else {
+        followX(next.x)
+        followY(next.y)
+      }
+    }
+    element.addEventListener('pointerenter', enter)
+    element.addEventListener('pointermove', move)
+    return () => {
+      element.removeEventListener('pointerenter', enter)
+      element.removeEventListener('pointermove', move)
+      followX.tween.kill()
+      followY.tween.kill()
+    }
+  }, [])
   const phone = CONTACT.phone.replace(/\s/g, '')
   return <footer className="site-footer">
     <svg className="footer-illustrations" viewBox="0 0 1440 850" fill="none" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice">
@@ -37,11 +88,11 @@ export default function Footer() {
       </div>
       <div className="footer-links" role="navigation" aria-label="Footer company links">
         <h2>Company</h2>
-        <a href="#top">Home</a><a href="#about-us">Our story</a><a href="#services">Celebrations</a><a href="#gallery">Our work</a><a href="#contact">Contact</a>
+        <a href="#top">Home</a><a href="#about-us">Our story</a><a href="#services">Celebrations</a><a href="#gallery">Portfolio</a><a href="#contact">Contact</a>
       </div>
       <div className="footer-links" role="navigation" aria-label="Footer celebration links">
         <h2>Your celebration</h2>
-        <a href="#services">Weddings</a><a href="#services">Haldi &amp; Mehndi</a><a href="#services">Anniversaries</a><a href="#services">Corporate events</a><a href="#venues">Explore settings <span aria-hidden="true">↗</span></a>
+        <a href="#services">Weddings</a><a href="#services">Haldi &amp; Mehndi</a><a href="#services">Anniversaries</a><a href="#services">Corporate events</a>
       </div>
       <div className="footer-connect footer-links">
         <h2>Connect</h2>
@@ -52,18 +103,7 @@ export default function Footer() {
       </div>
     </div>
     <div className="footer-bottom"><span>© {new Date().getFullYear()} Laughing Tree. All rights reserved.</span></div>
-    <a href="#top" className="footer-wordmark" aria-label="Laughing Tree — back to top"
-      onPointerMove={event => {
-        const bounds = event.currentTarget.getBoundingClientRect()
-        event.currentTarget.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`)
-        event.currentTarget.style.setProperty('--spot-y', `${event.clientY - bounds.top}px`)
-        event.currentTarget.style.setProperty('--logo-tilt-x', `${(0.5 - (event.clientY - bounds.top) / bounds.height) * 8}deg`)
-        event.currentTarget.style.setProperty('--logo-tilt-y', `${((event.clientX - bounds.left) / bounds.width - 0.5) * 8}deg`)
-      }}
-      onPointerLeave={event => {
-        event.currentTarget.style.setProperty('--logo-tilt-x', '0deg')
-        event.currentTarget.style.setProperty('--logo-tilt-y', '0deg')
-      }}>
+    <a ref={wordmark} href="#top" className="footer-wordmark" aria-label="Laughing Tree - back to top">
       <Logo />
       <span className="footer-logo-spotlight" aria-hidden="true"><Logo /></span>
     </a>

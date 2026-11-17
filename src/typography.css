@@ -1,0 +1,64 @@
+/* Shared type scale for page sections. The hero keeps its own typography. */
+:root {
+  --text-heading: 48px;
+  --text-subheading: 24px;
+  --text-body: 16px;
+  --text-label: 14px;
+}
+
+#root section h2,
+#root section .about-editorial-word--left {
+  font-size: var(--text-heading);
+  line-height: 1.15;
+}
+
+#root section h3,
+#root section .gallery-subheading,
+#root section .about-cinema-heading > em,
+#root section .about-editorial-word--right,
+#root section .story-film figcaption,
+#root .site-footer h2 {
+  font-size: var(--text-subheading);
+  line-height: 1.35;
+}
+
+#root section p,
+#root section blockquote,
+#root section .stats small,
+#root section .portfolio-caption,
+#root section .gallery-lightbox-photo figcaption,
+#root section input,
+#root section select,
+#root section textarea,
+#root section label,
+#root .site-footer p,
+#root .site-footer a,
+#root .site-footer address,
+#root .site-footer .footer-bottom {
+  font-size: var(--text-body);
+  line-height: 1.7;
+}
+
+#root section .eyebrow {
+  font-size: var(--text-label);
+  line-height: 1.5;
+}
+
+#root section .about-cinema-eyebrow {
+  font-family: var(--serif);
+  font-size: var(--text-heading);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+#root section .process-step-subtitle {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --text-heading: 32px;
+    --text-subheading: 22px;
+  }
+}

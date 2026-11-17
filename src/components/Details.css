@@ -1,17 +1,17 @@
 .details .d-stage{overflow:hidden;border-radius:28px 6px}
 .details .d-stage{transform-origin:center;transition:transform .3s var(--out),box-shadow .3s var(--out)}
-.details .d-stage.is-hovered{z-index:2;transform:translateY(-8px) scale(1.025);box-shadow:0 24px 60px #0005,0 0 0 1px #e8d6a855}
+.details .d-stage.is-hovered{z-index:2;transform:translateY(-8px) scale(1.025);box-shadow:0 24px 60px color-mix(in srgb, var(--charcoal) 33.333%, transparent),0 0 0 1px color-mix(in srgb, var(--paper) 33.333%, transparent)}
 /* The shared tree sits behind the layout, showing beside the photo edge. */
 .details{overflow:hidden}
 .details .pin{isolation:isolate}
 .details .d-list{position:relative;z-index:1;max-width:25vw}
 .details .d-stage{z-index:2}
-.details-orbits{position:absolute;z-index:0;inset:0 44% 0 30%;overflow:hidden;pointer-events:none;opacity:.58;transition:opacity .4s ease;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.details-orbits{position:absolute;z-index:0;inset:0 44% 0 30%;overflow:hidden;pointer-events:none;opacity:.58;transition:opacity .4s ease;mask-image:linear-gradient(90deg,transparent,var(--charcoal) 12%,var(--charcoal) 88%,transparent)}
 .details.is-previewing .details-orbits{opacity:.4}
 .details-orbit-position{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--orbit-phase));transition:transform 1.2s var(--out)}
 .details-orbit-position--0{--orbit-radius:clamp(110px,10vw,160px);--orbit-size:clamp(64px,5.5vw,88px);--orbit-time:65s}
 .details-orbit-ring{position:absolute;width:0;height:0;animation:details-orbit-turn var(--orbit-time) linear infinite;animation-play-state:var(--orbit-play)}
-.details-orbit-photo{position:absolute;left:calc(var(--orbit-size) / -2);top:calc(var(--orbit-size) / -2);width:var(--orbit-size);height:var(--orbit-size);border-radius:50%;overflow:hidden;border:1px solid #e8d6a880;box-shadow:0 0 28px #c9ad7426;filter:blur(1px) saturate(.85);transform:rotate(var(--orbit-angle)) translateX(var(--orbit-radius)) rotate(calc(var(--orbit-angle) * -1))}
+.details-orbit-photo{position:absolute;left:calc(var(--orbit-size) / -2);top:calc(var(--orbit-size) / -2);width:var(--orbit-size);height:var(--orbit-size);border-radius:50%;overflow:hidden;border:1px solid color-mix(in srgb, var(--paper) 50.196%, transparent);box-shadow:0 0 28px color-mix(in srgb, var(--charcoal) 14.902%, transparent);filter:blur(1px) saturate(.85);transform:rotate(var(--orbit-angle)) translateX(var(--orbit-radius)) rotate(calc(var(--orbit-angle) * -1))}
 .details-orbit-photo img{display:block;width:100%;height:100%;object-fit:cover}
 @keyframes details-orbit-turn{to{transform:rotate(360deg)}}
 @media(max-width:900px){
@@ -25,13 +25,13 @@
 @media(prefers-reduced-motion:reduce){.details-orbit-ring{animation:none}.details-orbit-position,.details-orbits{transition:none}.details-orbit-position{transform:none}}
 .details .pin::before{
   content:'';position:absolute;z-index:-1;left:43%;top:50%;translate:-50% -50%;
-  width:clamp(100px,12vw,185px);aspect-ratio:1;background:#9b8362;opacity:.38;pointer-events:none;
+  width:clamp(100px,12vw,185px);aspect-ratio:1;background:var(--charcoal);opacity:.38;pointer-events:none;
   -webkit-mask:url('/images/about-celebration-tree.png') center / 135% no-repeat;
   mask:url('/images/about-celebration-tree.png') center / 135% no-repeat;
 }
 @media(max-width:900px){
   .details .pin::before{display:none}
-  .details-orbits::before{content:'';position:absolute;left:50%;top:50%;translate:-50% -50%;width:125px;aspect-ratio:1;background:#9b8362;opacity:.7;mask:url('/images/about-celebration-tree.png') center / 135% no-repeat;-webkit-mask:url('/images/about-celebration-tree.png') center / 135% no-repeat}
+  .details-orbits::before{content:'';position:absolute;left:50%;top:50%;translate:-50% -50%;width:125px;aspect-ratio:1;background:var(--charcoal);opacity:.7;mask:url('/images/about-celebration-tree.png') center / 135% no-repeat;-webkit-mask:url('/images/about-celebration-tree.png') center / 135% no-repeat}
 }
 .detail-photo{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .3s ease;pointer-events:none}
 .detail-photo.is-active{opacity:1;z-index:1}

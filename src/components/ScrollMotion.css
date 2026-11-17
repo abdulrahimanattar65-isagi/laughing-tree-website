@@ -1,18 +1,20 @@
-html .scroll-motion[data-scroll-reveal]{opacity:0;animation:none;clip-path:none}
-html .scroll-motion[data-scroll-reveal].is-scroll-visible{animation:page-scroll-entrance 1.15s var(--out) var(--entrance-delay,0ms) both}
-html .scroll-motion[data-scroll-reveal]:focus-within{opacity:1;animation:none;transform:none}
-[data-scroll-media]{translate:0 var(--media-shift,0px);scale:1.08}
-@keyframes page-scroll-entrance{
-  from{opacity:0;transform:translate3d(var(--entrance-x,0px),32px,0)}
-  to{opacity:1;transform:translate3d(0,0,0)}
+/* GSAP owns reveal transforms, avoiding competing CSS entrance animations. */
+html.has-scroll-motion .rv.in{animation:none;clip-path:none}
+.parallax-media{translate:0 var(--parallax-y,0%);scale:1.1}
+.story-film{overflow:hidden}
+@media(min-width:1001px) and (min-height:700px){
+  .couple-stories-film .story-grid{align-items:start;min-height:95svh}
+  .couple-stories-film .story-film{position:sticky;top:110px}
+  .couple-stories-film .story-note{margin-top:14vh;margin-bottom:12vh}
 }
-@media(max-width:760px){
-  @keyframes page-scroll-entrance{
-    from{opacity:0;transform:translate3d(clamp(-48px,var(--entrance-x,0px),48px),20px,0)}
-    to{opacity:1;transform:translate3d(0,0,0)}
-  }
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .celebration-bar>a:hover .celebration-bar-icon{transform:translateY(-3px)}
+  .celebration-bar-icon{transition:transform .35s var(--out)}
+  .comparison-card .comparison{transition:box-shadow .4s}
+  .comparison-card:hover .comparison{box-shadow:0 12px 35px color-mix(in srgb,var(--paper) 8%,transparent)}
 }
 @media(prefers-reduced-motion:reduce){
-  html .scroll-motion[data-scroll-reveal],html .scroll-motion[data-scroll-reveal].is-scroll-visible{opacity:1;animation:none;transform:none}
-  [data-scroll-media]{translate:none;scale:none}
+  .parallax-media{translate:none;scale:none}
+  .couple-stories-film .story-film{position:relative;top:auto}
+  .couple-stories-film .story-grid{min-height:0}
 }

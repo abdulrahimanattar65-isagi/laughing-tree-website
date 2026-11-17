@@ -17,25 +17,22 @@ export const CONTACT = {
   instagram: 'https://www.instagram.com/laughingtree.in/',
 }
 export const NAV = [
-  ['about-us', 'Our story'], ['services', 'Celebrations'], ['venues', 'Venues'],
-  ['gallery', 'Our work'], ['contact', 'Consultation'],
+  ['about-us', 'Our story'], ['services', 'Celebrations'],
+  ['gallery', 'Portfolio'], ['contact', 'Consultation'],
 ]
 export const HERO = ['lt2', 'lt3', 'lt9', 'lt11']
-export const MARQUEE = ['Weddings', 'Haldi & Mehndi', 'Holi Celebrations', 'Anniversaries', 'Corporate Events', 'Home Functions', 'Floral Decor']
+export const MARQUEE = ['Weddings', 'Haldi & Mehndi', 'Holi Celebrations', 'Anniversaries', 'Corporate Events']
 export const SERVICES = [
   { img: 'lt9', title: 'Weddings', text: 'Mandaps, stages, entries and complete wedding design.' },
   { img: 'haldi-celebration', title: 'Haldi & Mehndi', text: 'Bright drapes, marigolds and cozy pre-wedding corners.' },
   { img: 'lt1', title: 'Holi Celebrations', text: 'Vibrant colours, festive settings and joyful gatherings, thoughtfully planned.' },
   { img: 'lt4', title: 'Anniversaries', text: 'Intimate, elegant setups for milestones worth marking.' },
   { img: 'lt8', title: 'Corporate Events', text: 'Conferences, galas and launches, run with precision.' },
-  { img: 'lt5', title: 'Home Functions', text: 'Griha pravesh, festivals and family gatherings styled at home.' },
 ]
 export const GALLERY = [
   ['lt1', 'A celebration filled with colour'],
-  ['lt2', 'Floral ceremony arch and white aisle'],
   ['lt3', 'Newlyweds in a sunlit garden'],
   ['lt4', 'A quiet moment together'],
-  ['lt5', 'An intimate floral table setting'],
   ['lt6', 'Wedding traditions and thoughtful details'],
   ['lt8', 'An elegant reception in blush and ivory'],
   ['lt9', 'A floral wedding stage'],
@@ -43,16 +40,15 @@ export const GALLERY = [
   ['lt11', 'The beginning of a new journey'],
 ]
 export const STEPS = [
-  ['Chat', 'Share your date, guest count and dream. We listen first.'],
-  ['Design', 'Mood boards, colours and layouts made only for you.'],
-  ['Create', 'Our crew builds, styles and lights every detail.'],
-  ['Celebrate', 'We manage the day so you just enjoy it.'],
+  ['Chat', "Let's Talk", "Tell us your wedding date, guest count and ideas. We'll listen to what you want."],
+  ['Design', 'Plan Your Wedding', 'We choose colours, themes, decorations and designs based on your style.'],
+  ['Create', 'Make It Happen', 'Our team handles the decorations, arrangements, lighting and setup.'],
+  ['Celebrate', 'Enjoy Your Day', 'We take care of everything so you can relax and enjoy your special day.'],
 ]
-export const EVENT_TYPES = ['Wedding', 'Haldi / Mehndi', 'Holi Celebrations', 'Anniversary', 'Corporate Event', 'Home Function']
+export const EVENT_TYPES = ['Wedding', 'Haldi / Mehndi', 'Holi Celebrations', 'Anniversary', 'Corporate Event']
 export const DETAILS = [
   { name: 'Decor', img: 'lt9', pos: '50% 25%', z: 1.3, text: 'Drapes, garlands and backdrops designed around your story.' },
   { name: 'Lighting', img: 'lt8', pos: '50% 50%', z: 1, text: 'Chandeliers and candlelight that make a room glow.' },
-  { name: 'Floral design', img: 'lt2', pos: '50% 40%', z: 1.25, text: 'Fresh blooms in arches, aisles and canopies.' },
   { name: 'Dining', img: 'lt5', pos: '50% 50%', z: 1.1, text: 'Lounges, buffets and tables styled to be remembered.' },
   { name: 'Venues', img: 'lt3', pos: '50% 55%', z: 1.1, text: 'Gardens, terraces and halls transformed end to end.' },
   { name: 'Stage production', img: 'lt11', pos: '50% 40%', z: 1.15, text: 'Entrances, sparklers and sound, timed to the second.' },
@@ -63,7 +59,6 @@ export const DETAILS = [
 export const ENTRANCE = [
   { id: 'about-us', label: 'Our story', img: 'lt2', background: 'BG1', text: 'Meet the dreamers' },
   { id: 'services', label: 'Celebrations', img: 'lt1', text: 'Moments made magical' },
-  { id: 'gallery', label: 'Our work', img: 'lt9', background: 'BG2', text: 'Wander through our creations' },
-  { id: 'venues', label: 'Venues', img: 'lt3', text: 'Find your perfect setting' },
+  { id: 'gallery', label: 'Portfolio', img: 'lt9', background: 'BG2', text: 'Wander through our creations' },
   { id: 'contact', label: 'Your beginning', img: 'lt5', text: 'Let’s dream together' },
 ]

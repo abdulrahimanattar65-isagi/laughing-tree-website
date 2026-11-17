@@ -1,48 +1,77 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Reveal from './Reveal'
 import './Moodboards.css'
 
-const boards = [
-  { img: 'lt1', title: 'The marigold hour', palette: 'Saffron · Leaf · Sunlight', colors: ['#d49a38', '#63734e', '#f4dfab'], note: 'Joy, in full colour' },
-  { img: 'lt2', title: 'A garden in bloom', palette: 'Blush · Ivory · Wild green', colors: ['#d9a5a5', '#f4eadb', '#75826a'], note: 'A little wild. Entirely yours.' },
-  { img: 'lt5', title: 'After-dark romance', palette: 'Candlelight · Champagne · Plum', colors: ['#d2ad69', '#e6d8bc', '#6e4555'], note: 'When the lights turn golden' },
-  { img: 'lt8', title: 'An evening in ivory', palette: 'Pearl · Rose · Soft gold', colors: ['#ede5d4', '#c99d97', '#b49a67'], note: 'Soft light, lasting memories' },
-  { img: 'lt9', title: 'Flowers, everywhere', palette: 'Petal · Coral · Forest', colors: ['#e1b6ba', '#c97f6b', '#465e43'], note: 'For the beautifully bold' },
-  { img: 'lt3', title: 'Under the open sky', palette: 'Sage · Linen · Garden green', colors: ['#a1ad8d', '#e8ddcb', '#546d47'], note: 'Room for a little wonder' },
+// Sample testimonials for the design; replace with approved client reviews.
+const columns = [
+  [{ img: 'testimonial-priya-rahul-mandap', alt: 'Wedding mandap for Priya and Rahul’s celebration', couple: 'Priya & Rahul', comment: 'We had a very good experience with Laughing Tree. The team was helpful throughout, and we could enjoy the wedding with our families.' }],
+  [
+    { img: 'testimonial-ananya-reception', alt: 'Wedding reception setting', couple: 'Ananya & Arjun', comment: 'They were easy to talk to and understood what we wanted. We felt comfortable with the team right from our first meeting.' },
+    { img: 'testimonial-sneha-karan-haldi', alt: 'Haldi celebration setting', couple: 'Sneha & Karan', comment: 'Such a friendly and patient team. Whenever we had a doubt, they were there to help. Our families were very happy too.' },
+  ],
+  [
+    { img: 'testimonial-meera-aditya-engagement', alt: 'Engagement celebration', couple: 'Meera & Aditya', comment: 'We were quite worried about planning everything, but working with them made it much easier. Really happy we chose Laughing Tree.' },
+    { img: 'testimonial-ishita-rohan-sangeet', alt: 'Sangeet celebration', couple: 'Ishita & Rohan', comment: 'The whole experience was smooth, and the team kept us updated. We had a lovely time with our family and friends.' },
+  ],
+  [{ img: 'testimonial-nisha-vikram-destination', alt: 'Destination wedding celebration', couple: 'Nisha & Vikram', comment: 'We could count on them whenever we needed help. Thank you to the whole team for making this such a happy memory for us.' }],
 ]
+const testimonials = columns.flat()
 
 export default function Moodboards() {
-  const ribbon = useRef(null)
-  const [inView, setInView] = useState(false)
-  const [pageVisible, setPageVisible] = useState(!document.hidden)
+  const section = useRef(null)
+  const [active, setActive] = useState(0)
+  const [rotating, setRotating] = useState(false)
 
   useEffect(() => {
-    const updateVisibility = () => setPageVisible(!document.hidden)
-    document.addEventListener('visibilitychange', updateVisibility)
-    const observer = 'IntersectionObserver' in window ? new IntersectionObserver(([entry]) => setInView(entry.isIntersecting)) : null
-    if (observer) observer.observe(ribbon.current)
-    else setInView(true)
+    const mobile = window.matchMedia('(max-width: 760px)')
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let visible = false
+    let timer
+    const sync = () => {
+      window.clearInterval(timer)
+      const enabled = mobile.matches && !motion.matches
+      setRotating(enabled)
+      if (enabled && visible && !document.hidden) {
+        timer = window.setInterval(() => setActive(value => (value + 1) % testimonials.length), 5000)
+      }
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      sync()
+    })
+    observer.observe(section.current)
+    mobile.addEventListener('change', sync)
+    motion.addEventListener('change', sync)
+    document.addEventListener('visibilitychange', sync)
+    sync()
     return () => {
-      observer?.disconnect()
-      document.removeEventListener('visibilitychange', updateVisibility)
+      window.clearInterval(timer)
+      observer.disconnect()
+      mobile.removeEventListener('change', sync)
+      motion.removeEventListener('change', sync)
+      document.removeEventListener('visibilitychange', sync)
     }
   }, [])
 
-  return <section className="moodboards mood-ribbon-section" id="moodboards" aria-labelledby="mood-title">
-    <Reveal className="editorial-head">
-      <span className="eyebrow">A first glimpse of the feeling</span>
-      <h2 id="mood-title">Set the <em>mood.</em></h2>
-      <p>Every celebration begins with a point of view. Find a colour, a feeling, a little spark of something that feels like you.</p>
-    </Reveal>
-    <div ref={ribbon} className="mood-ribbon-window" role="region" aria-label="Celebration moodboard inspiration">
-      <div className="mood-ribbon-track" style={{ animationPlayState: inView && pageVisible ? 'running' : 'paused' }}>
-        {[false, true].map(copy => <div key={String(copy)} className={'mood-ribbon-group' + (copy ? ' is-copy' : '')} aria-hidden={copy || undefined} inert={copy ? '' : undefined}>
-          {boards.map((board, index) => <article key={board.img} className={'mood-ribbon-card mood-ribbon-card--' + index % 3}>
-            <div className="mood-ribbon-card-top"><span aria-hidden="true">✳</span></div>
-            <div className="mood-ribbon-photo"><img src={`/images/${board.img}.png`} alt={board.title} loading="lazy" draggable="false" /><span>{board.note}</span></div>
-            <div className="mood-ribbon-swatches" aria-hidden="true">{board.colors.map(color => <i key={color} style={{ backgroundColor: color }} />)}<span>Made for your moment</span></div>
-            <h3>{board.title}</h3><p>{board.palette}</p>
-          </article>)}
+  return <section ref={section} className="moodboards testimonials-mosaic" id="testimonials" aria-labelledby="testimonials-title">
+    <div className="testimonials-composition">
+      <Reveal className="testimonials-intro">
+        <span className="eyebrow">Testimonials</span>
+        <h2 id="testimonials-title">Love notes.<br /><em>Beautiful memories.</em></h2>
+        <p>Every celebration has a story. A glimpse of the joy, the details, and the moments that stay with us.</p>
+      </Reveal>
+      <div className="testimonials-columns" aria-label="Wedding celebration memories">
+        {columns.map((cards, index) => <div className={`testimonials-column testimonials-column--${index + 1}`} key={index}>
+          {cards.map(card => <figure className="testimonials-photo" key={card.img}
+            data-stack-position={(testimonials.indexOf(card) - active + testimonials.length) % testimonials.length}
+            aria-hidden={rotating && testimonials.indexOf(card) !== active ? true : undefined}>
+            <div className="testimonials-photo-media"><img src={`/images/${card.img}.png`} alt={card.alt} loading="lazy" decoding="async" /></div>
+            <figcaption className="testimonials-photo-caption">
+              <h3>{card.couple}</h3>
+              <span className="testimonials-stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>
+              <blockquote>{card.comment}</blockquote>
+            </figcaption>
+          </figure>)}
         </div>)}
       </div>
     </div>

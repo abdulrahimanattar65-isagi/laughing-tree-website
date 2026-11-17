@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 
 const STATS = [
   { value: 500, suffix: '+', label: 'Events styled' },
@@ -8,50 +9,38 @@ const STATS = [
 
 export default function AboutStats() {
   const container = useRef(null)
-  const [progress, setProgress] = useState(0)
-
-  useEffect(() => {
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    let frame
-    let observer
-    const finish = () => {
-      window.cancelAnimationFrame(frame)
-      observer?.disconnect()
-      setProgress(1)
-    }
-    const onMotionChange = () => { if (motion.matches) finish() }
-    const start = () => {
-      observer?.disconnect()
-      const startedAt = performance.now()
-      const tick = now => {
-        const elapsed = Math.min((now - startedAt) / 1600, 1)
-        setProgress(1 - Math.pow(1 - elapsed, 3))
-        if (elapsed < 1) frame = window.requestAnimationFrame(tick)
-      }
-      frame = window.requestAnimationFrame(tick)
-    }
-
-    if (motion.matches || !('IntersectionObserver' in window)) {
-      finish()
-    } else {
-      observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) start()
-      }, { threshold: 0.4 })
+  useLayoutEffect(() => {
+    const media = gsap.matchMedia()
+    media.add('(prefers-reduced-motion: no-preference)', () => {
+      const counters = container.current.querySelectorAll('[data-count]')
+      const animation = gsap.timeline({ paused: true })
+      counters.forEach((element, index) => {
+        const count = { value: 0 }
+        element.textContent = '0'
+        animation.to(count, {
+          value: Number(element.dataset.count), duration: 1.8, ease: 'power3.out',
+          onUpdate: () => { element.textContent = String(Math.round(count.value)) },
+        }, index * .1)
+      })
+      const observer = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return
+        animation.play()
+        observer.disconnect()
+      }, { threshold: .5 })
       observer.observe(container.current)
-    }
-    motion.addEventListener('change', onMotionChange)
-    return () => {
-      observer?.disconnect()
-      window.cancelAnimationFrame(frame)
-      motion.removeEventListener('change', onMotionChange)
-    }
+      return () => {
+        observer.disconnect()
+        counters.forEach(element => { element.textContent = element.dataset.count })
+      }
+    }, container.current)
+    return () => media.revert()
   }, [])
 
   return <div className="stats" ref={container}>
     {STATS.map(({ value, suffix, label }) => <div key={label}>
-      <b className="stat-count" aria-label={`${value}${suffix}`}>
+      <b className="stat-count" aria-label={String(value) + suffix}>
         <span className="stat-count-space" aria-hidden="true">{value}{suffix}</span>
-        <span aria-hidden="true">{Math.floor(value * progress)}{suffix}</span>
+        <span aria-hidden="true"><span data-count={value}>{value}</span>{suffix}</span>
       </b>
       <small>{label}</small>
     </div>)}

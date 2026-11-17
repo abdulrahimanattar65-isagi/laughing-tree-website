@@ -1,85 +1,125 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Reveal from './Reveal'
 import { GALLERY } from '../data'
 import './Gallery.css'
 import './GalleryAlbum.css'
 
+gsap.registerPlugin(ScrollTrigger)
+
 export default function Gallery() {
   const [open, setOpen] = useState(null)
   const [active, setActive] = useState(0)
-  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  const track = useRef(null)
-  const stage = useRef(null)
-  const photos = useRef([])
+  const experience = useRef(null)
+  const viewport = useRef(null)
+  const rail = useRef(null)
+  const progress = useRef(null)
+  const position = useRef({ phase: 0 })
+  const transition = useRef(null)
+  const scrollTrigger = useRef(null)
   const activeRef = useRef(0)
+  const touchStart = useRef(null)
   const dialog = useRef(null)
   const isOpen = open !== null
   const selected = isOpen ? GALLERY[open] : null
 
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const update = () => setReducedMotion(media.matches)
-    media.addEventListener('change', update)
-    return () => media.removeEventListener('change', update)
-  }, [])
+  const updatePosition = amount => {
+    if (!viewport.current || !rail.current) return
+    const fraction = Math.max(0, Math.min(1, amount))
+    progress.current?.style.setProperty('--portfolio-progress', fraction)
+    const index = Math.round(fraction * (GALLERY.length - 1))
+    const phase = fraction * (GALLERY.length - 1)
+    const compact = window.innerWidth <= 760
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const height = viewport.current.clientHeight
+    Array.from(rail.current.children).forEach((slide, photoIndex) => {
+      const offset = photoIndex - phase
+      const outgoing = Math.max(0, Math.min(1, -offset))
+      const incoming = Math.max(0, Math.min(1, offset))
+      const entrance = incoming ** 3
+      const visible = reduced ? photoIndex === index : Math.abs(offset) < 1
+      const scale = reduced ? 1 : 1 - outgoing * .78 - entrance * .72
+      const x = reduced ? 0 : (-outgoing * .04 + entrance * .6) * viewport.current.clientWidth
+      const y = reduced ? 0 : (-outgoing * (compact ? .01 : .04) + entrance * (compact ? .42 : .6)) * height
+      slide.style.transform = `translate3d(${x}px,${y}px,0) scale(${scale})`
+      slide.style.opacity = String(visible ? (reduced ? 1 : 1 - outgoing - entrance) : 0)
+      slide.style.visibility = visible ? 'visible' : 'hidden'
+      // Keep the incoming photo above the outgoing photo throughout the transition.
+      slide.style.zIndex = String(photoIndex + 1)
+      slide.style.pointerEvents = photoIndex === index ? 'auto' : 'none'
+    })
+    if (activeRef.current !== index) {
+      activeRef.current = index
+      setActive(index)
+    }
+  }
 
-  useEffect(() => {
-    let frame = 0
-    const update = () => {
-      frame = 0
-      const bounds = track.current.getBoundingClientRect()
-      const stageHeight = stage.current.offsetHeight
-      const travel = Math.max(1, bounds.height - stageHeight)
-      const stickyTop = parseFloat(window.getComputedStyle(stage.current).top) || 0
-      const position = reducedMotion ? activeRef.current : Math.max(0, Math.min(GALLERY.length - 1, (stickyTop - bounds.top) / travel * (GALLERY.length - 1)))
-      const index = Math.round(position)
-      const compact = window.innerWidth <= 760
-      if (activeRef.current !== index) {
-        activeRef.current = index
-        setActive(index)
+  useLayoutEffect(() => {
+    const media = gsap.matchMedia()
+    media.add({ compact: '(max-width: 760px)', desktop: '(min-width: 761px)', reduced: '(prefers-reduced-motion: reduce)' }, context => {
+      if (context.conditions.reduced) {
+        updatePosition(activeRef.current / (GALLERY.length - 1))
+        return
       }
-      photos.current.forEach((photo, photoIndex) => {
-        const offset = photoIndex - position
-        const outgoing = Math.max(0, Math.min(1, -offset))
-        const incoming = Math.max(0, Math.min(1, offset))
-        const visible = offset >= -1.15 && offset <= 1.15
-        const scale = reducedMotion ? 1 : 1 - outgoing * .78 - incoming * .72
-        photo.style.setProperty('--photo-x', `${reducedMotion ? 0 : -outgoing * (compact ? 1 : 3) + incoming * 60}vw`)
-        photo.style.setProperty('--photo-y', `${reducedMotion ? 0 : (-outgoing * (compact ? .01 : .04) + incoming * (compact ? .42 : .6)) * stageHeight}px`)
-        photo.style.setProperty('--photo-scale', scale)
-        photo.style.opacity = reducedMotion ? (photoIndex === index ? '1' : '0') : String(visible ? Math.min(1, (1.15 - Math.abs(offset)) / .15) : 0)
-        photo.style.visibility = (reducedMotion ? photoIndex === index : visible) ? 'visible' : 'hidden'
-        photo.style.zIndex = photoIndex === index ? '3' : '2'
-        photo.style.pointerEvents = photoIndex === index ? 'auto' : 'none'
+      position.current.phase = 0
+      updatePosition(0)
+      const container = experience.current
+      const previousHeight = container.style.height
+      const scrollDistance = () => (GALLERY.length - 1) * viewport.current.clientHeight * (context.conditions.compact ? .45 : .55)
+      const measure = () => {
+        container.style.height = `${viewport.current.clientHeight + scrollDistance()}px`
+      }
+      container.classList.add('is-scroll-driven')
+      measure()
+      const tween = gsap.to(position.current, {
+        phase: 1,
+        ease: 'none',
+        onUpdate: () => updatePosition(position.current.phase),
+        scrollTrigger: {
+          id: 'portfolio-photo-transition',
+          trigger: container,
+          start: () => `top ${getComputedStyle(viewport.current).getPropertyValue('--portfolio-top').trim()}`,
+          end: () => '+=' + scrollDistance(),
+          scrub: .3,
+          fastScrollEnd: true,
+          invalidateOnRefresh: true,
+          onRefreshInit: measure,
+          onRefresh: () => updatePosition(position.current.phase),
+        },
       })
-    }
-    const schedule = () => {
-      if (!frame) frame = window.requestAnimationFrame(update)
-    }
-    update()
-    window.addEventListener('scroll', schedule, { passive: true })
-    window.addEventListener('resize', schedule)
+      scrollTrigger.current = tween.scrollTrigger
+      return () => {
+        scrollTrigger.current = null
+        container.classList.remove('is-scroll-driven')
+        container.style.height = previousHeight
+      }
+    }, viewport.current)
     return () => {
-      window.cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', schedule)
-      window.removeEventListener('resize', schedule)
+      transition.current?.kill()
+      media.revert()
     }
-  }, [reducedMotion, active])
+  }, [])
 
   const goTo = index => {
     const next = Math.max(0, Math.min(GALLERY.length - 1, index))
-    if (reducedMotion) {
-      activeRef.current = next
-      setActive(next)
+    const fraction = next / (GALLERY.length - 1)
+    if (scrollTrigger.current) {
+      const scroll = scrollTrigger.current
+      window.scrollTo({ top: scroll.start + (scroll.end - scroll.start) * fraction, behavior: 'smooth' })
       return
     }
-    const bounds = track.current.getBoundingClientRect()
-    const top = bounds.top + window.scrollY
-    const travel = Math.max(0, bounds.height - stage.current.offsetHeight)
-    const stickyTop = parseFloat(window.getComputedStyle(stage.current).top) || 0
-    window.scrollTo({ top: top - stickyTop + travel * next / (GALLERY.length - 1), behavior: 'smooth' })
+    transition.current?.kill()
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      position.current.phase = fraction
+      updatePosition(fraction)
+      return
+    }
+    transition.current = gsap.to(position.current, {
+      phase: fraction, duration: .9, ease: 'power2.inOut',
+      onUpdate: () => updatePosition(position.current.phase),
+    })
   }
-
   useEffect(() => {
     if (!isOpen) return
     const viewer = dialog.current
@@ -96,35 +136,42 @@ export default function Gallery() {
   return <section className="gallery portfolio-gallery" id="gallery" aria-labelledby="gallery-title">
     <div className="gallery-inner">
       <Reveal className="gallery-heading">
-        <div><p className="gallery-eyebrow">The celebration collection</p><h2 id="gallery-title">The moment<br /><em>everything changed.</em></h2></div>
-        <p className="gallery-intro">Beautiful spaces. Thoughtful details. Memories that stay with you. Scroll through a few of our favourite celebrations.</p>
+        <div><h2 id="gallery-title">Portfolio</h2><p className="gallery-subheading">A Collection of Beautiful Celebrations</p></div>
+        <p className="gallery-intro">Every celebration tells a unique story. Explore our collection of beautifully planned weddings, stunning decorations, and unforgettable moments crafted with passion and creativity.</p>
       </Reveal>
-      <div ref={track} className={'gallery-scroll-track' + (reducedMotion ? ' is-reduced-motion' : '')} style={{ '--photo-count': GALLERY.length }}>
-        <div ref={stage} className="gallery-scroll-stage" role="region" aria-label="Scroll through celebration photos" tabIndex={0}
+      <div ref={experience} className="portfolio-experience">
+        <div ref={viewport} className="portfolio-viewport" role="region" aria-roledescription="carousel" aria-label="Wedding portfolio. Scroll down for the next photo, scroll up for the previous photo, or use arrow keys." tabIndex={0}
+          onTouchStart={event => {
+            const touch = event.touches[0]
+            touchStart.current = { x: touch.clientX, y: touch.clientY }
+          }}
+          onTouchEnd={event => {
+            if (touchStart.current === null) return
+            const distance = event.changedTouches[0].clientX - touchStart.current.x
+            const verticalDistance = event.changedTouches[0].clientY - touchStart.current.y
+            if (Math.abs(distance) > 50 && Math.abs(distance) > Math.abs(verticalDistance) * 1.25) goTo(activeRef.current + (distance < 0 ? 1 : -1))
+            touchStart.current = null
+          }}
+          onTouchCancel={() => { touchStart.current = null }}
           onKeyDown={event => {
-            if (event.target !== event.currentTarget) return
             if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
               event.preventDefault()
               goTo(active + (event.key === 'ArrowRight' ? 1 : -1))
+            } else if (event.key === 'Home' || event.key === 'End') {
+              event.preventDefault()
+              goTo(event.key === 'Home' ? 0 : GALLERY.length - 1)
             }
           }}>
-          <div className="gallery-scroll-label"><span>Laughing Tree / The celebration edit</span><span>Scroll to discover ↓</span></div>
-          <div className="gallery-scroll-canvas">
-            {GALLERY.map(([path, alt], index) => <button key={path} ref={element => { photos.current[index] = element }} type="button"
-              className={'gallery-scroll-photo' + (index === active ? ' is-active' : '')}
-              style={{ visibility: index === 0 ? 'visible' : 'hidden' }}
-              tabIndex={index === active ? 0 : -1} aria-hidden={index !== active}
-              aria-label={'Open photo: ' + alt} aria-haspopup="dialog" onClick={() => setOpen(index)}>
-              <img src={`/images/${path}.png`} alt={alt} draggable="false" loading="lazy" decoding="async" />
-              <span className="gallery-scroll-expand" aria-hidden="true">↗</span>
-            </button>)}
+          <div ref={rail} className="portfolio-rail" role="list">
+            {GALLERY.map(([path, alt], index) => <article className={'portfolio-slide' + (index === active ? ' is-active' : '')} key={path} role="listitem" aria-hidden={index !== active} aria-label={(index + 1) + ' of ' + GALLERY.length}>
+              <button type="button" className="portfolio-photo" tabIndex={index !== active ? -1 : 0}
+                aria-label={'Open photo: ' + alt} aria-haspopup="dialog" onClick={() => setOpen(index)}>
+                <img className="portfolio-photo-image" src={'/images/' + path + '.png'} alt={alt} draggable="false" loading={index <= active + 1 ? 'eager' : 'lazy'} decoding="async" />
+              </button>
+            </article>)}
           </div>
-          <div className="gallery-scroll-copy" key={active}>
-            <span className="gallery-scroll-eyebrow">Moments worth keeping</span>
-            <h3>{GALLERY[active][1]}</h3>
-            <p>Every celebration has a story.<br />Let us create yours.</p>
-            <a href="#contact">Begin your story <span aria-hidden="true">↗</span></a>
-          </div>
+          <div className="portfolio-caption" aria-live="off"><h3>{GALLERY[active][1]}</h3></div>
+          <div ref={progress} className="portfolio-progress" aria-hidden="true"><span /></div>
         </div>
       </div>
       <p className="gallery-footnote">Every celebration has a story. Let us create yours.</p>
@@ -139,7 +186,7 @@ export default function Gallery() {
       {selected && <>
         <div className="gallery-lightbox-toolbar"><button autoFocus onClick={() => setOpen(null)} aria-label="Close photo viewer">Close <span aria-hidden="true">×</span></button></div>
         <figure className="gallery-lightbox-photo"><img key={selected[0]} src={`/images/${selected[0]}.png`} alt={selected[1]} /><figcaption id="gallery-photo-caption" aria-live="polite">{selected[1]}</figcaption></figure>
-        <div className="gallery-lightbox-navigation"><button onClick={() => move(-1)} aria-label="Previous photo">← <span>Previous</span></button><button onClick={() => move(1)} aria-label="Next photo"><span>Next</span> →</button></div>
+        <div className="gallery-lightbox-navigation"><button onClick={() => move(-1)} aria-label="Previous photo">Previous</button><button onClick={() => move(1)} aria-label="Next photo">Next</button></div>
       </>}
     </dialog>
   </section>
