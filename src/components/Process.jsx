@@ -22,6 +22,7 @@ function ProcessIcon({ index }) {
 
 export default function Process() {
   const stage = useRef(null)
+  const visibilityTarget = useRef(null)
   const [turn, setTurn] = useState(0)
   const [visible, setVisible] = useState(false)
   const [hovered, setHovered] = useState(false)
@@ -34,11 +35,14 @@ export default function Process() {
     update()
     media.addEventListener('change', update)
     const observer = new IntersectionObserver(([entry]) => {
-      const inView = entry.isIntersecting && entry.intersectionRatio >= .4
-      if (!inView) setTurn(0)
+      const inView = entry.isIntersecting
+      if (!inView) {
+        setTurn(0)
+        setHovered(false)
+      }
       setVisible(inView)
-    }, { threshold: [0, .4] })
-    observer.observe(stage.current)
+    }, { rootMargin: '-96px 0px -10% 0px', threshold: 0 })
+    observer.observe(visibilityTarget.current)
     return () => { observer.disconnect(); media.removeEventListener('change', update) }
   }, [])
 
@@ -46,29 +50,31 @@ export default function Process() {
     if (reduced || !visible || hovered) return
     const timer = window.setInterval(() => {
       if (!document.hidden) setTurn(value => value + 1)
-    }, 4000)
+    }, 3000)
     return () => window.clearInterval(timer)
   }, [reduced, visible, hovered])
 
   const pauseOnHover = event => {
-    if (event.pointerType !== 'mouse') return
+    // Scrolling beneath a stationary cursor must not disable autoplay.
+    if (event.pointerType !== 'mouse' || (!event.movementX && !event.movementY) || !visible || hovered) return
     setHovered(true)
-    stage.current.getAnimations({ subtree: true }).forEach(animation => animation.pause())
+    stage.current.getAnimations?.({ subtree: true }).forEach(animation => animation.pause())
   }
 
   const resumeOnLeave = () => {
     setHovered(false)
-    stage.current.getAnimations({ subtree: true }).forEach(animation => {
+    stage.current.getAnimations?.({ subtree: true }).forEach(animation => {
       if (animation.playState === 'paused') animation.play()
     })
   }
 
-  return <section className="process process-clock" id="process" style={{ '--flow-accent': FLOW_STYLES[active].color }} data-light data-clock-visible={visible} aria-labelledby="process-heading" onPointerEnter={pauseOnHover} onPointerLeave={resumeOnLeave} onPointerCancel={resumeOnLeave}>
+  return <section className="process process-clock" id="process" style={{ '--flow-accent': FLOW_STYLES[active].color }} data-light data-clock-visible={visible} aria-labelledby="process-heading">
     <Reveal className="process-clock-heading">
       <span className="eyebrow">Thoughtfully planned. Beautifully brought to life.</span>
       <h2 id="process-heading">From Idea to <em>Celebration</em></h2>
     </Reveal>
-    <div ref={stage} className="process-clock-stage">
+    <div ref={stage} className="process-clock-stage" onPointerMove={pauseOnHover} onPointerLeave={resumeOnLeave} onPointerCancel={resumeOnLeave}>
+      <span ref={visibilityTarget} className="process-clock-visibility-target" aria-hidden="true" />
       <div className="process-clock-art" aria-hidden="true">
         {FLOW_STYLES.map(({ image }, index) => <img key={image} className={active === index ? 'is-active' : ''} src={`/images/${image}.jpg`} alt="" loading="lazy" decoding="async" />)}
       </div>

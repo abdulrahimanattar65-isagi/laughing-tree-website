@@ -166,7 +166,7 @@ export default function Gallery() {
             {GALLERY.map(([path, alt], index) => <article className={'portfolio-slide' + (index === active ? ' is-active' : '')} key={path} role="listitem" aria-hidden={index !== active} aria-label={(index + 1) + ' of ' + GALLERY.length}>
               <button type="button" className="portfolio-photo" tabIndex={index !== active ? -1 : 0}
                 aria-label={'Open photo: ' + alt} aria-haspopup="dialog" onClick={() => setOpen(index)}>
-                <img className="portfolio-photo-image" src={'/images/' + path + '.png'} alt={alt} draggable="false" loading={index <= active + 1 ? 'eager' : 'lazy'} decoding="async" />
+                <img className="portfolio-photo-image" src={'/images/' + path} alt={alt} draggable="false" loading={index <= active + 1 ? 'eager' : 'lazy'} decoding="async" />
               </button>
             </article>)}
           </div>
@@ -185,7 +185,7 @@ export default function Gallery() {
       }}>
       {selected && <>
         <div className="gallery-lightbox-toolbar"><button autoFocus onClick={() => setOpen(null)} aria-label="Close photo viewer">Close <span aria-hidden="true">×</span></button></div>
-        <figure className="gallery-lightbox-photo"><img key={selected[0]} src={`/images/${selected[0]}.png`} alt={selected[1]} /><figcaption id="gallery-photo-caption" aria-live="polite">{selected[1]}</figcaption></figure>
+        <figure className="gallery-lightbox-photo"><img key={selected[0]} src={`/images/${selected[0]}`} alt={selected[1]} /><figcaption id="gallery-photo-caption" aria-live="polite">{selected[1]}</figcaption></figure>
         <div className="gallery-lightbox-navigation"><button onClick={() => move(-1)} aria-label="Previous photo">Previous</button><button onClick={() => move(1)} aria-label="Next photo">Next</button></div>
       </>}
     </dialog>

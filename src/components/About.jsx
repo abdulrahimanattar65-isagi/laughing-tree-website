@@ -30,12 +30,12 @@ export default function About() {
       gsap.set(heading, { autoAlpha: 0, y: -60 })
       gsap.set(copy, { autoAlpha: 0, y: 28 })
       gsap.set(shade, { opacity: 0 })
-      gsap.timeline({
+      const timeline = gsap.timeline({
         defaults: { ease: 'power3.inOut' },
         scrollTrigger: {
           id: 'about-cinematic', trigger: element,
           start: () => `top ${compact ? 84 : 86}px`,
-          end: () => `+=${window.innerHeight * (compact ? 1.5 : 1.8)}`,
+          end: () => `+=${window.innerHeight * (compact ? .75 : 1.8)}`,
           pin: true, scrub: .8, anticipatePin: 1, invalidateOnRefresh: true,
         },
       })
@@ -49,6 +49,11 @@ export default function About() {
         .to(heading, { autoAlpha: 1, y: 0, duration: 1.1 }, 1.65)
         .to(copy, { autoAlpha: 1, y: 0, duration: .85, stagger: .18 }, 2.35)
         .to({}, { duration: .45 })
+      if (compact) {
+        timeline.fromTo(eyebrow,
+          { top: () => words[0].offsetTop - words[0].offsetHeight / 2 - eyebrow.offsetHeight - 12 },
+          { top: 12, duration: 2.2 }, 0)
+      }
     }, section.current)
     // Font metrics and the incoming image may resolve after ScrollTrigger initializes.
     let disposed = false

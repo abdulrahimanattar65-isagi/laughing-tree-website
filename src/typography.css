@@ -56,6 +56,12 @@
   line-height: inherit;
 }
 
+@media (min-width: 761px) {
+  #root section .about-cinema-eyebrow {
+    font-size: calc(var(--text-heading) / 2);
+  }
+}
+
 @media (max-width: 760px) {
   :root {
     --text-heading: 32px;

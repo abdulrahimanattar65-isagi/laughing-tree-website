@@ -30,14 +30,15 @@ export const SERVICES = [
   { img: 'lt8', title: 'Corporate Events', text: 'Conferences, galas and launches, run with precision.' },
 ]
 export const GALLERY = [
-  ['lt1', 'A celebration filled with colour'],
-  ['lt3', 'Newlyweds in a sunlit garden'],
-  ['lt4', 'A quiet moment together'],
-  ['lt6', 'Wedding traditions and thoughtful details'],
-  ['lt8', 'An elegant reception in blush and ivory'],
-  ['lt9', 'A floral wedding stage'],
-  ['lt10', 'Wedding vows in the garden'],
-  ['lt11', 'The beginning of a new journey'],
+  ['lt1.png', 'A celebration filled with colour'],
+  ['portfolio-venue-at-dusk.png', 'An elegant wedding welcome at dusk'],
+  ['hero-garden-lanterns.png', 'A garden reception beneath glowing lanterns'],
+  ['portfolio-golden-reception.jpeg', 'A reception stage in warm golden light'],
+  ['lt8.png', 'An elegant reception in blush and ivory'],
+  ['lt9.png', 'A floral wedding stage'],
+  ['hero-floral-mandap.jpeg', 'A blush and ivory floral mandap'],
+  ['portfolio-crimson-rose-mandap.png', 'A traditional mandap with crimson roses and jasmine'],
+  ['portfolio-pink-gold-mandap.png', 'A lavish wedding stage in pink and gold'],
 ]
 export const STEPS = [
   ['Chat', "Let's Talk", "Tell us your wedding date, guest count and ideas. We'll listen to what you want."],

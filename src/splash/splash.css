@@ -1,0 +1,46 @@
+/* Full-screen video splash with a soft reveal of the website underneath. */
+.brand-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  overflow: hidden;
+  background: var(--paper, #f6f5f2);
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  opacity: 1;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brand-splash--fade {
+  opacity: 0;
+}
+
+.brand-splash__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+html.brand-splash-active,
+html.brand-splash-active body {
+  overflow: hidden;
+}
+
+#root.brand-splash-behind {
+  opacity: 0;
+}
+
+/* Make the page fully visible behind the fading video to avoid a dark dip. */
+#root.brand-splash-behind.brand-splash-reveal {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-splash {
+    transition: none;
+  }
+}

@@ -4,6 +4,7 @@
 .process.process-clock h2{margin:0;text-wrap:balance}
 .process-clock h2 em{font-weight:400}
 .process-clock-stage{--radius:270px;--reach:17%;position:relative;height:540px;max-width:1280px;margin:0 auto;overflow:hidden;isolation:isolate}
+.process-clock-visibility-target{position:absolute;top:50%;left:0;width:100%;height:1px;pointer-events:none}
 .process-clock-art{position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--paper)}
 .process-clock-art img{position:absolute;right:0;bottom:0;width:52%;height:100%;object-fit:contain;object-position:right center;mix-blend-mode:multiply;opacity:0;transition:opacity 1.5s ease;mask-image:radial-gradient(ellipse at 56% 55%,#000 48%,transparent 74%)}
 .process-clock-art img.is-active{opacity:.9}
@@ -31,6 +32,7 @@
   .process-clock-art img.is-active{opacity:.78}
   .process-clock-arc{top:calc(35% - var(--radius))}
   .process-clock-wheel{top:35%}
+  .process-clock-visibility-target{top:35%}
   .process-clock-number{left:calc(var(--radius) + 18px);font-size:clamp(48px,13vw,66px)}
   .process-clock-copy{left:calc(var(--reach) + 98px);right:6%;top:35%;text-shadow:0 1px 8px var(--paper)}
   .process-clock-icon{width:28px;height:28px;margin-bottom:12px}
