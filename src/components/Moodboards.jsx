@@ -30,7 +30,7 @@ export default function Moodboards() {
     const sync = () => {
       window.clearInterval(timer)
       const enabled = mobile.matches && !motion.matches
-      setRotating(enabled)
+      setRotating(mobile.matches)
       if (enabled && visible && !document.hidden) {
         timer = window.setInterval(() => setActive(value => (value + 1) % testimonials.length), 5000)
       }
@@ -73,6 +73,16 @@ export default function Moodboards() {
             </figcaption>
           </figure>)}
         </div>)}
+      </div>
+      <div className="testimonials-pagination" role="group" aria-label="Choose a wedding memory">
+        {testimonials.map((card, index) => <button
+          key={card.img}
+          type="button"
+          className={index === active ? 'is-active' : undefined}
+          aria-label={`Show ${card.couple}'s review (${index + 1} of ${testimonials.length})`}
+          aria-pressed={index === active}
+          onClick={() => setActive(index)}
+        ><span /></button>)}
       </div>
     </div>
   </section>

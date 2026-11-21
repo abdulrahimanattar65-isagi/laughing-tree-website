@@ -86,7 +86,7 @@ export function runSplash({ onDone } = {}) {
     return;
   }
   video.src = window.matchMedia('(max-width: 760px)').matches
-    ? '/assets/laughing-tree-9x16.mp4'
-    : '/assets/splash-logo.mp4';
+    ? '/assets/laughing-tree-9x16.mp4?v=petal-free'
+    : '/assets/splash-logo.mp4?v=petal-free';
   video.play()?.catch(finish);
 }
