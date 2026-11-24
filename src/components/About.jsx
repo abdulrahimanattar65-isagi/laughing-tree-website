@@ -18,6 +18,13 @@ export default function About() {
       const { compact, reduced } = context.conditions
       if (reduced) return
       const element = frame.current
+      if (compact) {
+        gsap.from(element.querySelector('.about-cinema-content'), {
+          y: 20, opacity: 0, duration: 1.2, ease: 'power2.out',
+          scrollTrigger: { trigger: element, start: 'top 85%', once: true },
+        })
+        return
+      }
       const image = element.querySelector('.about-cinema-media')
       const words = element.querySelectorAll('.about-editorial-word')
       const heading = element.querySelector('.about-cinema-heading')
