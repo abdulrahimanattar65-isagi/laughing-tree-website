@@ -93,7 +93,7 @@
 
 /* One continuous invitation-style border around the entire gallery section. */
 .portfolio-transition{
-  height:clamp(64px,8vw,128px);
+  height:clamp(16px,2vw,32px);
   background:var(--charcoal);
 }
 .gallery.portfolio-gallery{

@@ -24,7 +24,9 @@ export default function About() {
       const copy = element.querySelectorAll('.about-cinema-copy')
       const shade = element.querySelector('.about-cinema-shade')
       const eyebrow = element.querySelector('.about-cinema-eyebrow')
-      const lightText = getComputedStyle(element).getPropertyValue('--ivory').trim()
+      // Read rendered colours so the tween always receives concrete RGB values.
+      const darkText = getComputedStyle(eyebrow).color
+      const lightText = getComputedStyle(heading).color
       const initialWidth = compact ? '62%' : '32%'
       const initialHeight = () => (element.clientWidth || window.innerWidth) * (compact ? .62 : .32) / (1672 / 941)
       gsap.set(heading, { autoAlpha: 0, y: -60 })
@@ -35,17 +37,19 @@ export default function About() {
         scrollTrigger: {
           id: 'about-cinematic', trigger: element,
           start: () => `top ${compact ? 84 : 86}px`,
-          end: () => `+=${window.innerHeight * (compact ? .75 : 1.8)}`,
-          pin: true, scrub: .8, anticipatePin: 1, invalidateOnRefresh: true,
+          end: () => `+=${window.innerHeight * (compact ? 1.25 : 2.2)}`,
+          pin: true, scrub: 1.2, anticipatePin: 1, invalidateOnRefresh: true,
         },
       })
         .fromTo(image,
           { width: initialWidth, height: initialHeight, top: compact ? '43%' : '50%', borderRadius: 6, autoAlpha: 1 },
-          { width: '100%', height: '100%', top: '50%', borderRadius: 0, duration: 2.2 }, 0)
+          { width: '100%', height: '100%', top: '50%', borderRadius: 0, duration: 2.2, ease: 'power2.inOut' }, 0)
         .to(words[0], { xPercent: -40, scale: 1.12, autoAlpha: 0, duration: 1.3 }, .15)
         .to(words[1], { xPercent: 40, scale: 1.12, autoAlpha: 0, duration: 1.3 }, .15)
         .to(shade, { opacity: 1, duration: 1.2 }, 1.1)
-        .to(eyebrow, { color: lightText, opacity: 1, duration: 1.2 }, 1.1)
+        .fromTo(eyebrow,
+          { color: darkText },
+          { color: lightText, opacity: 1, duration: 1.2 }, 1.1)
         .to(heading, { autoAlpha: 1, y: 0, duration: 1.1 }, 1.65)
         .to(copy, { autoAlpha: 1, y: 0, duration: .85, stagger: .18 }, 2.35)
         .to({}, { duration: .45 })
@@ -70,7 +74,7 @@ export default function About() {
       <div className="about-cinema-content">
       <h2 id="about-title" className="about-cinema-heading"><span>{FIRST_LINE}</span><em>{SECOND_LINE}</em></h2>
       <p className="about-cinema-copy about-cinema-copy--left">At Laughing Tree, we specialize in turning your wedding day into a magical and unforgettable experience.</p>
-      <p className="about-cinema-copy about-cinema-copy--right">From intimate ceremonies to grand celebrations, our dedicated team of wedding planners, designers, and coordinators work closely with you to create a seamless and personalized event that reflects your unique love story.</p>
+      <p className="about-cinema-copy about-cinema-copy--right">From intimate ceremonies to grand celebrations, our dedicated team of wedding décor specialists and designers work closely with you…</p>
       </div>
     </div>
     <div className="about-details">

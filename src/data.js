@@ -23,11 +23,11 @@ export const NAV = [
 export const HERO = ['lt2', 'lt3', 'lt9', 'lt11']
 export const MARQUEE = ['Weddings', 'Haldi & Mehndi', 'Holi Celebrations', 'Anniversaries', 'Corporate Events']
 export const SERVICES = [
-  { img: 'lt9', title: 'Weddings', text: 'Mandaps, stages, entries and complete wedding design.' },
-  { img: 'haldi-celebration', title: 'Haldi & Mehndi', text: 'Bright drapes, marigolds and cozy pre-wedding corners.' },
-  { img: 'lt1', title: 'Holi Celebrations', text: 'Vibrant colours, festive settings and joyful gatherings, thoughtfully planned.' },
+  { img: 'lt9', title: 'Weddings', text: 'Mandaps, stages, entrances and complete wedding décor.' },
+  { img: 'haldi-celebration', title: 'Haldi & Mehndi', text: 'Bright drapes, marigolds and beautifully designed pre-wedding spaces.' },
+  { img: 'lt1', title: 'Holi Celebrations', text: 'Vibrant colours and festive decor for joyful holi celebrations.' },
   { img: 'lt4', title: 'Anniversaries', text: 'Intimate, elegant setups for milestones worth marking.' },
-  { img: 'lt8', title: 'Corporate Events', text: 'Conferences, galas and launches, run with precision.' },
+  { img: 'lt8', title: 'Corporate Events', text: 'Elegant decor and customized setups for conferences, galas and launches.' },
 ]
 export const GALLERY = [
   ['lt1.png', 'A celebration filled with colour'],
@@ -41,10 +41,10 @@ export const GALLERY = [
   ['portfolio-pink-gold-mandap.png', 'A lavish wedding stage in pink and gold'],
 ]
 export const STEPS = [
-  ['Chat', "Let's Talk", "Tell us your wedding date, guest count and ideas. We'll listen to what you want."],
-  ['Design', 'Plan Your Wedding', 'We choose colours, themes, decorations and designs based on your style.'],
-  ['Create', 'Make It Happen', 'Our team handles the decorations, arrangements, lighting and setup.'],
-  ['Celebrate', 'Enjoy Your Day', 'We take care of everything so you can relax and enjoy your special day.'],
+  ['Chat', "Let's Talk", "Tell us your wedding date, venue and decor ideas. we'll understand your vision."],
+  ['Design', 'Plan Your Wedding', 'We create personalized decor concepts, colour palettes and themes that reflect your style.'],
+  ['Create', 'Make It Happen', 'Our team brings your vision to life through beautiful decorations, lighting and venue setups.'],
+  ['Celebrate', 'Enjoy Your Day', 'We take care of every decor detail so you can relax and enjoy your special day.'],
 ]
 export const EVENT_TYPES = ['Wedding', 'Haldi / Mehndi', 'Holi Celebrations', 'Anniversary', 'Corporate Event']
 export const DETAILS = [

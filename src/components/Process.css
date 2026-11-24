@@ -19,12 +19,12 @@
 .process-clock-icon{display:block;width:38px;height:38px;margin-bottom:18px;color:var(--flow-accent)}
 .process-clock-icon svg{width:100%;height:100%}
 #root .process-clock-copy h3{font:400 32px/1.15 var(--serif);margin:0 0 10px}
-.process-clock-subtitle{display:block;font-size:14px;font-weight:500;margin-bottom:12px}
-#root .process-clock-copy p{max-width:34ch;font-size:16px;line-height:1.7;color:color-mix(in srgb,var(--charcoal) 65%,transparent)}
+.process-clock-subtitle{display:block;font-size:14px;font-weight:600;color:var(--charcoal);margin-bottom:12px}
+#root .process-clock-copy p{max-width:34ch;font-size:16px;line-height:1.7;color:color-mix(in srgb,var(--charcoal) 82%,transparent)}
 @media(min-width:761px) and (max-width:1050px){.process-clock-stage{--reach:12%;--radius:240px;height:500px}.process-clock-copy{left:calc(var(--reach) + 128px);right:40%}.process-clock-art img{width:46%;opacity:0}.process-clock-art img.is-active{opacity:.8}#root .process-clock-copy p{font-size:14px}}
 @keyframes process-clock-copy-in{from{opacity:0}to{opacity:1}}
 @media(max-width:760px){
-  .process.process-clock{padding:32px 6vw 20px}
+  .process.process-clock{padding:32px 6vw 12px}
   .process-clock-heading{margin-bottom:12px}
   #root .process-clock-heading .eyebrow{font-size:10px;letter-spacing:.08em;margin-bottom:12px}
   .process-clock-stage{--radius:210px;--reach:12%;height:480px;margin:0 -6vw}

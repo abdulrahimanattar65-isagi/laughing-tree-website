@@ -1,6 +1,6 @@
 .moodboards.testimonials-mosaic{padding:52px 2vw 56px;background:#181818;color:var(--paper);overflow:hidden}
 .testimonials-composition{position:relative;max-width:1280px;margin-inline:auto}
-.testimonials-intro{position:absolute;top:0;left:8%;width:38%;z-index:1;user-select:text;-webkit-user-select:text;cursor:text}
+.testimonials-intro{position:absolute;top:0;left:0;width:38%;z-index:1;text-align:left;user-select:text;-webkit-user-select:text;cursor:text}
 .testimonials-intro *{user-select:text;-webkit-user-select:text;cursor:text}
 .testimonials-intro .eyebrow{display:block;color:var(--paper);font-size:9px;letter-spacing:.16em;margin-bottom:10px}
 .testimonials-intro h2{font:400 clamp(32px,3.4vw,48px)/1.12 var(--serif);letter-spacing:-.025em}
@@ -28,7 +28,7 @@
 .testimonials-pagination{display:none}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.testimonials-photo:hover img{transform:scale(1.035)}}
 @media(max-width:760px){
-  .moodboards.testimonials-mosaic{padding:40px 4vw}
+  .moodboards.testimonials-mosaic{padding:20px 4vw}
   .testimonials-intro{position:relative;left:auto;width:100%;max-width:380px;margin:0 0 30px}
   .testimonials-intro h2{font-size:clamp(38px,8.5vw,48px)}
   .testimonials-intro p{max-width:34ch}

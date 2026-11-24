@@ -59,7 +59,7 @@ export default function CoupleStories() {
           </button>
         </div>}
       </figure>
-      <Reveal className="story-note"><span className="story-mark">“</span><p>Some celebrations are grand and full of colour. Others are quiet, close, and all about the people in the room. We make space for both.</p><a className="lnk" href="#contact">Tell us your story</a></Reveal>
+      <Reveal className="story-note"><span className="story-mark">“</span><p>Some celebrations are grand and full of colour. Others are intimate, personal, and filled with meaningful moments. we create beautiful spaces for both.</p><a className="lnk" href="#contact">Tell us your story</a></Reveal>
     </div>
   </section>
 }
