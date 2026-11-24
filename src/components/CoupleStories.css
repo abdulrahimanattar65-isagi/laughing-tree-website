@@ -14,8 +14,19 @@
 .story-film-controls button{width:44px;height:44px;min-height:44px;padding:11px;border-radius:50%}
 .story-film-controls svg{display:block;width:20px;height:20px;flex:none}
 .story-film-controls svg:not([fill]){fill:currentColor}
-.couple-stories-film .story-note{position:relative;padding:32px 0;border-top:1px solid color-mix(in srgb, var(--charcoal) 25.098%, transparent);border-bottom:1px solid color-mix(in srgb, var(--charcoal) 25.098%, transparent)}
-.couple-stories-film .story-note .lnk{display:inline-block;color:var(--charcoal)}
+.couple-stories-film .story-note{position:relative;padding:16px 0}
+.story-note-art{display:none;position:absolute;color:var(--charcoal);opacity:.32;pointer-events:none}
+@media(min-width:1101px){
+  .story-note-art{display:block}
+  .story-note-art--invitation{width:clamp(80px,7vw,110px);right:12%;bottom:calc(100% + 16px)}
+  .story-note-art--sprig{width:clamp(120px,11vw,170px);left:12%;top:calc(100% + 20px)}
+}
+.couple-stories-film .story-mark{display:block;height:40px;font:400 72px/1 var(--serif);color:var(--charcoal)}
+.couple-stories-film .story-note p{margin:8px 0 24px;font:400 clamp(20px,2vw,28px)/1.4 var(--serif)}
+.couple-stories-film .story-note .story-contact-button{display:inline-flex;align-items:center;justify-content:center;gap:16px;min-height:44px;padding:12px 22px;border-radius:999px;background:#ecd0a5;color:var(--charcoal);font:600 12px/1.5 var(--sans);letter-spacing:.12em;text-transform:uppercase;transition:background-color .25s}
+.couple-stories-film .story-contact-button svg{width:20px;height:20px;flex:none}
+.couple-stories-film .story-note .story-contact-button:hover{background:#e1be89}
+.couple-stories-film .story-contact-button:focus-visible{outline:2px solid var(--charcoal);outline-offset:4px}
 @media(prefers-reduced-motion:no-preference){
   .story-film.is-scroll-visible video,.story-film.is-scroll-visible>img{animation:story-film-settle 1.8s var(--out) both}
   .story-film.is-scroll-visible figcaption{animation:story-caption-rise 1.2s var(--out) .25s both}
@@ -24,3 +35,8 @@
 }
 @media(max-width:900px){.couple-stories-film .story-grid{grid-template-columns:1fr;gap:36px}.couple-stories-film .story-film{height:clamp(440px,75vw,650px)}.couple-stories-film .story-note{max-width:100%;margin:0}.couple-stories-film .story-note p{max-width:36ch}}
 @media(max-width:560px){.couple-stories-film .story-grid{margin-top:28px}.couple-stories-film .story-film{height:480px;max-height:75svh;border-radius:110px 110px 6px 6px}.story-film::after{inset:9px;border-radius:102px 102px 3px 3px}.story-film-label{top:38px;font-size:9px}.couple-stories-film .story-film figcaption{left:24px;right:24px;bottom:90px}.story-film-controls{left:24px;right:24px;bottom:24px}}
+.story-heading{position:relative}
+.story-heading>.rv{position:relative;z-index:1}
+.story-botanical{position:absolute;right:0;top:50%;transform:translateY(-50%);width:min(38vw,460px);height:auto;color:var(--charcoal);opacity:.4;pointer-events:none}
+@media(max-width:1100px){.story-botanical{width:30vw;right:-2vw;opacity:.28}}
+@media(max-width:760px){.story-botanical{display:none}}

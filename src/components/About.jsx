@@ -22,6 +22,7 @@ export default function About() {
       const image = element.querySelector('.about-cinema-media')
       const words = element.querySelectorAll('.about-editorial-word')
       const heading = element.querySelector('.about-cinema-heading')
+      const content = element.querySelector('.about-cinema-content')
       const copy = element.querySelectorAll('.about-cinema-copy')
       const shade = element.querySelector('.about-cinema-shade')
       const eyebrow = element.querySelector('.about-cinema-eyebrow')
@@ -54,11 +55,12 @@ export default function About() {
         .to(heading, { autoAlpha: 1, y: 0, duration: 1.1 }, 1.65)
         .to(copy, { autoAlpha: 1, y: 0, duration: .85, stagger: .18 }, 2.35)
         .to({}, { duration: compact ? .9 : .45 })
-      if (compact) {
-        timeline.fromTo(eyebrow,
-          { top: () => words[0].offsetTop - words[0].offsetHeight / 2 - eyebrow.offsetHeight - 12 },
-          { top: 16, duration: 2.2 }, 0)
-      }
+      timeline.fromTo(eyebrow,
+        { top: () => compact
+          ? words[0].offsetTop - words[0].offsetHeight / 2 - eyebrow.offsetHeight - 12
+          : 32 },
+        { top: () => content.offsetTop + heading.offsetTop - eyebrow.offsetHeight - 16,
+          duration: 2.2 }, 0)
       return () => element.classList.remove('is-scroll-animated')
     }, section.current)
     // Font metrics and the incoming image may resolve after ScrollTrigger initializes.

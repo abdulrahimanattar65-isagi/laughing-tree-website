@@ -2,7 +2,7 @@
 .testimonials-composition{position:relative;max-width:1280px;margin-inline:auto}
 .testimonials-intro{position:absolute;top:0;left:0;width:38%;z-index:1;text-align:left;user-select:text;-webkit-user-select:text;cursor:text}
 .testimonials-intro *{user-select:text;-webkit-user-select:text;cursor:text}
-.testimonials-intro .eyebrow{display:block;color:var(--paper);font-size:9px;letter-spacing:.16em;margin-bottom:10px}
+.moodboards.testimonials-mosaic .testimonials-intro .eyebrow{display:block;color:var(--paper);font-size:9px;letter-spacing:.16em;margin-bottom:10px}
 .testimonials-intro h2{font:400 clamp(32px,3.4vw,48px)/1.12 var(--serif);letter-spacing:-.025em}
 .testimonials-intro h2 em{font-weight:400}
 .testimonials-intro p{max-width:32ch;margin-top:12px;font:400 12px/1.6 var(--sans);color:color-mix(in srgb,var(--paper) 78%,transparent)}

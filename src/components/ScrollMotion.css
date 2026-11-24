@@ -2,11 +2,6 @@
 html.has-scroll-motion .rv.in{animation:none;clip-path:none}
 .parallax-media{translate:0 var(--parallax-y,0%);scale:1.1}
 .story-film{overflow:hidden}
-@media(min-width:1001px) and (min-height:700px){
-  .couple-stories-film .story-grid{align-items:start;min-height:95svh}
-  .couple-stories-film .story-film{position:sticky;top:110px}
-  .couple-stories-film .story-note{margin-top:14vh;margin-bottom:12vh}
-}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){
   .celebration-bar>a:hover .celebration-bar-icon{transform:translateY(-3px)}
   .celebration-bar-icon{transition:transform .35s var(--out)}
@@ -15,6 +10,4 @@ html.has-scroll-motion .rv.in{animation:none;clip-path:none}
 }
 @media(prefers-reduced-motion:reduce){
   .parallax-media{translate:none;scale:none}
-  .couple-stories-film .story-film{position:relative;top:auto}
-  .couple-stories-film .story-grid{min-height:0}
 }
