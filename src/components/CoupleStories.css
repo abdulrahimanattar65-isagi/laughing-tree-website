@@ -22,8 +22,8 @@
   .story-note-art--sprig{width:clamp(120px,11vw,170px);left:12%;top:calc(100% + 20px)}
 }
 .couple-stories-film .story-mark{display:block;height:40px;font:400 72px/1 var(--serif);color:var(--charcoal)}
-.couple-stories-film .story-note p{margin:8px 0 24px;font:400 clamp(20px,2vw,28px)/1.4 var(--serif)}
-.couple-stories-film .story-note .story-contact-button{display:inline-flex;align-items:center;justify-content:center;gap:16px;min-height:44px;padding:12px 22px;border-radius:999px;background:#ecd0a5;color:var(--charcoal);font:600 12px/1.5 var(--sans);letter-spacing:.12em;text-transform:uppercase;transition:background-color .25s}
+.couple-stories-film .story-note p{margin:8px 0 24px;font:400 clamp(20px,2vw,26px)/1.4 var(--serif)}
+.couple-stories-film .story-note .story-contact-button{display:inline-flex;align-items:center;justify-content:center;gap: 14px;min-height:44px;padding:12px 22px;border-radius:999px;background:#ecd0a5;color:var(--charcoal);font:600 16px/1.5 var(--sans);letter-spacing:.12em;text-transform:uppercase;transition:background-color .25s}
 .couple-stories-film .story-contact-button svg{width:20px;height:20px;flex:none}
 .couple-stories-film .story-note .story-contact-button:hover{background:#e1be89}
 .couple-stories-film .story-contact-button:focus-visible{outline:2px solid var(--charcoal);outline-offset:4px}

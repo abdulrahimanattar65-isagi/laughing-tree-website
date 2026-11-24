@@ -39,6 +39,11 @@
   line-height: 1.7;
 }
 
+#root section.couple-stories-film .story-note p {
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.4;
+}
+
 #root section .eyebrow {
   font-size: var(--text-label);
   line-height: 1.5;
