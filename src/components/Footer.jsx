@@ -4,6 +4,15 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import './Footer.css'
 
+function ConnectIcon({ type }) {
+  return <svg className="footer-connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+    {type === 'phone' && <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z" />}
+    {type === 'mail' && <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></>}
+    {type === 'instagram' && <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none" /></>}
+    {type === 'location' && <><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="3" /></>}
+  </svg>
+}
+
 export default function Footer() {
   const wordmark = useRef(null)
   useEffect(() => {
@@ -92,14 +101,14 @@ export default function Footer() {
       </div>
       <div className="footer-links" role="navigation" aria-label="Footer celebration links">
         <h2>Your celebration</h2>
-        <a href="#services">Weddings</a><a href="#services">Haldi &amp; Mehndi</a><a href="#services">Anniversaries</a><a href="#services">Corporate events</a>
+        <a href="#services">Weddings</a><a href="#services">Haldi &amp; Mehndi</a><a href="#services">Holi Celebrations</a><a href="#services">Anniversaries</a><a href="#services">Corporate events</a>
       </div>
       <div className="footer-connect footer-links">
         <h2>Connect</h2>
-        <a href={`tel:${phone}`}><span aria-hidden="true">↗</span>{CONTACT.phone}</a>
-        <a href={`mailto:${CONTACT.email}`}><span aria-hidden="true">✉</span>Email us <span aria-hidden="true">↗</span></a>
-        <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer">@laughingtree.in <span aria-hidden="true">↗</span></a>
-        <address>{CONTACT.address}<br />Karnataka, India</address>
+        <a href={`tel:${phone}`}><ConnectIcon type="phone" />{CONTACT.phone}</a>
+        <a href={`mailto:${CONTACT.email}`}><ConnectIcon type="mail" />Email us</a>
+        <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer"><ConnectIcon type="instagram" />@laughingtree.in</a>
+        <address><ConnectIcon type="location" /><span>{CONTACT.address}<br />Karnataka, India</span></address>
       </div>
     </div>
     <div className="footer-bottom"><span>© {new Date().getFullYear()} Laughing Tree. All rights reserved.</span></div>

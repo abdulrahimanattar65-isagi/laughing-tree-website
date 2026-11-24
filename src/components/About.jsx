@@ -18,13 +18,7 @@ export default function About() {
       const { compact, reduced } = context.conditions
       if (reduced) return
       const element = frame.current
-      if (compact) {
-        gsap.from(element.querySelector('.about-cinema-content'), {
-          y: 20, opacity: 0, duration: 1.2, ease: 'power2.out',
-          scrollTrigger: { trigger: element, start: 'top 85%', once: true },
-        })
-        return
-      }
+      if (compact) element.classList.add('is-scroll-animated')
       const image = element.querySelector('.about-cinema-media')
       const words = element.querySelectorAll('.about-editorial-word')
       const heading = element.querySelector('.about-cinema-heading')
@@ -36,7 +30,7 @@ export default function About() {
       const lightText = getComputedStyle(heading).color
       const initialWidth = compact ? '62%' : '32%'
       const initialHeight = () => (element.clientWidth || window.innerWidth) * (compact ? .62 : .32) / (1672 / 941)
-      gsap.set(heading, { autoAlpha: 0, y: -60 })
+      gsap.set(heading, { autoAlpha: 0, y: compact ? -30 : -60 })
       gsap.set(copy, { autoAlpha: 0, y: 28 })
       gsap.set(shade, { opacity: 0 })
       const timeline = gsap.timeline({
@@ -44,7 +38,7 @@ export default function About() {
         scrollTrigger: {
           id: 'about-cinematic', trigger: element,
           start: () => `top ${compact ? 84 : 86}px`,
-          end: () => `+=${window.innerHeight * (compact ? 1.25 : 2.2)}`,
+          end: () => `+=${compact ? element.clientHeight * 1.6 : window.innerHeight * 2.2}`,
           pin: true, scrub: 1.2, anticipatePin: 1, invalidateOnRefresh: true,
         },
       })
@@ -59,12 +53,13 @@ export default function About() {
           { color: lightText, opacity: 1, duration: 1.2 }, 1.1)
         .to(heading, { autoAlpha: 1, y: 0, duration: 1.1 }, 1.65)
         .to(copy, { autoAlpha: 1, y: 0, duration: .85, stagger: .18 }, 2.35)
-        .to({}, { duration: .45 })
+        .to({}, { duration: compact ? .9 : .45 })
       if (compact) {
         timeline.fromTo(eyebrow,
           { top: () => words[0].offsetTop - words[0].offsetHeight / 2 - eyebrow.offsetHeight - 12 },
-          { top: 12, duration: 2.2 }, 0)
+          { top: 16, duration: 2.2 }, 0)
       }
+      return () => element.classList.remove('is-scroll-animated')
     }, section.current)
     // Font metrics and the incoming image may resolve after ScrollTrigger initializes.
     let disposed = false

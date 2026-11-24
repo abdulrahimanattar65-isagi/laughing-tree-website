@@ -15,6 +15,8 @@ footer.site-footer{position:relative;isolation:isolate;padding:70px 5vw 0;backgr
 .site-footer .footer-links a{display:inline-flex;align-items:center;gap:9px;font:400 12px/1.6 var(--sans);color:var(--paper);transition:color .25s}
 .site-footer .footer-links a:hover,.site-footer .footer-links a:focus-visible{color:var(--paper)}
 .footer-connect address{margin-top:12px;color:var(--charcoal);font:400 11px/1.8 var(--sans)}
+.footer-connect-icon{display:block;width:18px;height:18px;flex:none}
+.site-footer .footer-connect address{display:flex;align-items:center;gap:9px}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;max-width:1500px;margin:24px auto 0;padding-top:14px;border-top:1px solid color-mix(in srgb, var(--paper) 7.843%, transparent);color:var(--charcoal);font:400 10px/1.6 var(--sans)}
 .footer-bottom a{transition:color .3s}.footer-bottom a:hover{color:var(--paper)}
 .site-footer .footer-wordmark{display:block;position:relative;width:calc(100% + 10vw);max-width:none;margin:24px -5vw 0;color:var(--charcoal)}
