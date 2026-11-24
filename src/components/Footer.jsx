@@ -111,7 +111,9 @@ export default function Footer() {
         <address><ConnectIcon type="location" /><span>{CONTACT.address}<br />Karnataka, India</span></address>
       </div>
     </div>
-    <div className="footer-bottom"><span>© {new Date().getFullYear()} Laughing Tree. All rights reserved.</span></div>
+    <div className="footer-bottom"><span>© {new Date().getFullYear()} Laughing Tree. All rights reserved.</span>
+      <span className="footer-credit">Powered by <a href="https://spitel.com/" target="_blank" rel="noopener noreferrer"><strong>Spitel Pvt.Ltd</strong></a></span>
+    </div>
     <a ref={wordmark} href="#top" className="footer-wordmark" aria-label="Laughing Tree - back to top">
       <Logo />
       <span className="footer-logo-spotlight" aria-hidden="true"><Logo /></span>
