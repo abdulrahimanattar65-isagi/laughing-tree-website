@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+﻿import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Reveal from './Reveal'
@@ -137,7 +137,7 @@ export default function Gallery() {
     <div className="gallery-inner">
       <Reveal className="gallery-heading">
         <div><h2 id="gallery-title">Portfolio</h2><p className="gallery-subheading">A Collection of Beautiful Celebrations</p></div>
-        <p className="gallery-intro">Every celebration tells a unique story. Explore our collection of beautifully planned weddings, stunning decorations, and unforgettable moments crafted with passion and creativity.</p>
+        <p className="gallery-intro">Every celebration tells a unique story. Explore our collection of beautifully designed wedding decor, stunning event setups, and unforgettable spaces crafted with passion and creativity.</p>
       </Reveal>
       <div ref={experience} className="portfolio-experience">
         <div ref={viewport} className="portfolio-viewport" role="region" aria-roledescription="carousel" aria-label="Wedding portfolio. Scroll down for the next photo, scroll up for the previous photo, or use arrow keys." tabIndex={0}
